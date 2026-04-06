@@ -1,0 +1,81 @@
+import React from 'react'
+import {FaGithub,FaLinkedinIn,FaInstagram,FaWhatsapp,FaDiscord} from "react-icons/fa";
+const Contact = () => {
+  return (
+    <div className='mt-[200px] mb-[50px] flex justify-center items-center flex-col z-10' id='contact'>
+      <h1 className="text-5xl font-extrabold">
+        SEND A<span className="text-[#9CA3AF]"> MESSAGE </span>
+      </h1>
+      <p className="mt-10 mb-10 w-120 text-l text-[#9CA3AF] font-[family-name:var(--font-kosugi)]">
+         Whether you have a question or just want to say hi, I'll try my best to get back to you!
+      </p>
+      <div className='w-250 h-100 flex justify-between '>
+          <div className='bg-[#111114] p-10 h-full border rounded-lg border-[#1a1c1f] w-125 text-start hover:border-[#E84A4A] hover:shadow-[0_0_30px_rgba(212,183,131,0.2)] transition-all duration-300'>
+              <h1 className='text-2xl font-bold mb-6'>Establish Connection</h1>
+              <div className='mb-5 group'>
+                <h2 className='text-sm text-[#9CA3AF] font-normal'>System Email</h2>
+                <p className='font-medium text-xl mb-5 text-white relative w-max transition-colors duration-300 group-hover:text-[#D4B783]'>
+                  muneebmoosavv@gmail.com
+                  <span className='absolute left-0 -bottom-2 h-[2px] w-0 bg-[#D4B783] transition-all duration-300 group-hover:w-full'></span>
+                </p>
+              </div>
+              <div className='mb-5 group'>
+                <h2 className='text-sm text-[#9CA3AF] font-normal'>Secure Line</h2>
+                <p className='font-medium text-xl mb-9 text-white relative w-max transition-colors duration-300 group-hover:text-[#D4B783]'>
+                  +91 7356878374
+                  <span className='absolute left-0 -bottom-2 h-[2px] w-0 bg-[#D4B783] transition-all duration-300 group-hover:w-full'></span>
+                </p>
+              </div>
+              <h2 className='font-semibold text-sm text-[#9CA3AF]'>SOCIAL NETWORKS:</h2>
+              <div className="flex gap-4 mt-4">
+                {[FaGithub, FaLinkedinIn, FaInstagram, FaWhatsapp, FaDiscord].map((Icon, i) => (
+                  <div key={i} className="w-10 h-10 bg-[#192029] flex items-center justify-center rounded-lg border border-white/20 text-gray-400 hover:text-[#D4B783] hover:bg-[#242220] hover:-translate-y-3  hover:border-[#D4B783] transition cursor-pointer transition-all duration-300">
+                    <Icon />
+                  </div>
+                ))}
+              </div>
+          </div>
+          <form className='flex flex-col gap-6' action="">
+            {/* name */}
+              <div className='flex flex-col items-start w-[200] gap-3'>
+                <label for='name' className='text-[#888f9a] text-xs '>YOUR NAME</label>
+                <input
+                  className="border border-[#888f9a] w-100 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
+                  id='name'
+                  type="text"
+                  placeholder="Enter your name...."
+                  required
+                />
+              </div>
+              {/* email */}
+              <div className='flex flex-col items-start w-[200] gap-3'>
+                <label for='email' className='text-[#888f9a] text-xs'>YOUR EMAIL</label>
+                <input
+                  className="border border-[#888f9a] w-100 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
+                  id='email'
+                  type='email'
+                  placeholder="Enter your email...."
+                  required
+                />
+              </div>
+              {/* message */}
+              <div className='flex flex-col items-start w-[200] gap-3'>
+                <label for='message' className='text-[#888f9a] text-xs'>MESSAGE PAYLOAD</label>
+                <textarea
+                  className="resize-none border border-[#888f9a] w-100 h-27 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
+                  id='message'
+                  placeholder="Enter your message...."
+                  required
+                />
+              </div>
+              {/* button */}
+              <button type='submit'
+              className='h-12 font-[family-name:var(--font-kosugi)] bg-linear-to-r from-[#D4B783] to-[#E84A4A] font-bold rounded-lg p-5 flex items-center justify-center gap-2 hover:scale-103 transition-all duration-300'>INITAILIZE_TRANSMISSION</button>
+          </form>
+      </div>
+
+    </div>
+  )
+}
+
+export default Contact

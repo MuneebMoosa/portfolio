@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap');
+@import "tailwindcss";
+@theme {
+  --font-kosugi: "Kosugi Maru", sans-serif;
+  --font-noto: "Noto Sans JP", sans-serif;
+}
+body {
+  @apply bg-[#05070d] text-white;
+  background-image:
+    radial-gradient(at 50% 10%, rgba(255, 121, 80, 0.08), transparent 80%);
+     background-attachment: fixed;
+}
+ 
+
+/* 🔲 Grid overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient( rgba(146, 144, 143, 0.13) 0.5px, transparent 0.5px),
+    linear-gradient(90deg,  rgba(146, 144, 143, 0.07) 0.5px, transparent 0.5px);
+  background-size: 90px 80px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* scroll bar */
+html {
+  scroll-behavior: smooth;
+}
+/* Scrollbar width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track (background) */
+::-webkit-scrollbar-track {
+  background: transparent; /* your dark bg */
+}
+
+/* Thumb (scroll handle) */
+::-webkit-scrollbar-thumb {
+  background: #E84A4A; /* your gold color */
+  border-radius: 10px;
+}
+
+/* Hover effect */
+::-webkit-scrollbar-thumb:hover {
+  background: #D4B783;
+}

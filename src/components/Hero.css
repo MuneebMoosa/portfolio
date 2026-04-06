@@ -1,0 +1,130 @@
+
+/* image inifinit loop animation start */
+.orbit-svg {
+  position: absolute;
+  width: 140%;
+  height: 140%;
+  z-index: 0;
+  transform-origin: center;
+}
+
+/* gray track */
+.orbit-path {
+  fill: none;
+  stroke: rgba(51, 73, 92, 0.23);
+  stroke-width: 6;
+}
+
+.orbit-move {
+  fill: none;
+  stroke: #D4B783;
+  stroke-width: 10;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px #D4B783);
+}
+/* image inifinit loop animation ends */
+
+
+/* image shodow animation start*/
+.heartbeat {
+  animation: heartbeatGlow 3.0s ease-in-out infinite;
+}
+
+/* animation */
+@keyframes heartbeatGlow {
+  0% {
+    box-shadow: 
+      0 0 80px rgba(212, 183, 131, 0.2),
+      0 0 100px rgba(232, 74, 74, 0.15);
+  }
+
+  50% {
+    box-shadow: 
+      0 0 250px rgba(212, 184, 131, 0.36),
+      0 0 300px rgba(232, 74, 74, 0.37);
+  }
+
+  100% {
+    box-shadow: 
+      0 0 80px rgba(212, 183, 131, 0.22),
+      0 0 100px rgba(232, 74, 74, 0.18);
+  }
+}
+/* image shodow animation ends*/
+
+/*  circle ouline arcs animation start */
+.ring1 {
+  position: absolute;
+}
+
+.ring1::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+
+  border: 2px solid transparent;
+  border-top: 2px solid #d4b88389; /* gold arc */
+
+  animation: rotateRing 4s linear infinite;
+}
+
+
+.ring2 {
+  position: absolute;
+}
+
+.ring2::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+
+  border: 2px solid transparent;
+  border-top: 2px solid #e84a4a71; 
+
+  animation: rotateRingReverse 5s linear infinite;
+}
+
+@keyframes rotateRing {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateRingReverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+/*  circle ouline arcs animation ends*/
+
+/*  Icon bounce animation start*/
+.group:hover .download-icon {
+  animation: bounceIcon 1.6s ease infinite;
+}
+
+@keyframes bounceIcon {
+  0% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-6px); /* up */
+  }
+
+  60% {
+    transform: translateY(4px);  /* down */
+  }
+
+  100% {
+    transform: translateY(0);   /* back */
+  }
+}
+/*  Icon bounce animation end*/
