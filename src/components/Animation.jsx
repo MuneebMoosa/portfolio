@@ -86,7 +86,7 @@ useAnimationFrame(() => {
 });
 
 // ─── Main ────────────────────────────────────────────────────────────────────
-const LeafBackground = () => {
+const Animation = () => {
   const scrollVelocity = useMotionValue(0);
   const lastScrollY = useRef(0);
 
@@ -156,4 +156,4 @@ const LeafBackground = () => {
   );
 };
 
-export default LeafBackground;
+export default Animation;

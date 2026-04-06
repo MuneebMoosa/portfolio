@@ -7,11 +7,11 @@ import Journey from './components/Journey';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import LeafBackground from './components/LeafBackground';
+import Animation from './components/Animation';
 const App = () => {
   return (
      <div className="relative z-10 min-h-screen flex flex-col  text-center">
-      <LeafBackground/>
+      <Animation/>
       <Navbar/>
       <Hero/>
       <About/>
