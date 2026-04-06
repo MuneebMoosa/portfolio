@@ -1,5 +1,5 @@
 import { CodeXml } from 'lucide-react';
-import SkillBar from './skills/Skillbar';
+import SkillBar from './skills/SkillBar';
 import { FaReact, FaJs, FaServer, FaNodeJs, FaDatabase , FaGitAlt, FaGithub, FaDocker} from "react-icons/fa";
 import { SiTailwindcss, SiRedux, SiFramer, SiExpress, SiMongodb, SiMysql, SiPostman } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
