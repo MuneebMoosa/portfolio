@@ -9,7 +9,7 @@ const Contact = () => {
       <p className="mt-10 mb-10 w-120 text-l text-[#9CA3AF] font-[family-name:var(--font-kosugi)]">
          Whether you have a question or just want to say hi, I'll try my best to get back to you!
       </p>
-      <div className='w-250 h-100 flex justify-between '>
+      <div className='max-w-6xl w-full h-100 flex gap-10 justify-center'>
           <div className='bg-[#111114] p-10 h-full border rounded-lg border-[#1a1c1f] w-125 text-start hover:border-[#E84A4A] hover:shadow-[0_0_30px_rgba(212,183,131,0.2)] transition-all duration-300'>
               <h1 className='text-2xl font-bold mb-6'>Establish Connection</h1>
               <div className='mb-5 group'>
@@ -35,9 +35,9 @@ const Contact = () => {
                 ))}
               </div>
           </div>
-          <form className='flex flex-col gap-6' action="">
+          <form className='flex flex-col gap-6 h-full' action="">
             {/* name */}
-              <div className='flex flex-col items-start w-[200] gap-3'>
+              <div className='flex flex-col items-start w-full gap-3'>
                 <label for='name' className='text-[#888f9a] text-xs '>YOUR NAME</label>
                 <input
                   className="border border-[#888f9a] w-100 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
@@ -48,7 +48,7 @@ const Contact = () => {
                 />
               </div>
               {/* email */}
-              <div className='flex flex-col items-start w-[200] gap-3'>
+              <div className='flex flex-col items-start w-full gap-3'>
                 <label for='email' className='text-[#888f9a] text-xs'>YOUR EMAIL</label>
                 <input
                   className="border border-[#888f9a] w-100 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
@@ -59,7 +59,7 @@ const Contact = () => {
                 />
               </div>
               {/* message */}
-              <div className='flex flex-col items-start w-[200] gap-3'>
+              <div className='flex flex-col items-start w-full gap-3'>
                 <label for='message' className='text-[#888f9a] text-xs'>MESSAGE PAYLOAD</label>
                 <textarea
                   className="resize-none border border-[#888f9a] w-100 h-27 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
@@ -70,7 +70,7 @@ const Contact = () => {
               </div>
               {/* button */}
               <button type='submit'
-              className='h-12 font-[family-name:var(--font-kosugi)] bg-linear-to-r from-[#D4B783] to-[#E84A4A] font-bold rounded-lg p-5 flex items-center justify-center gap-2 hover:scale-103 transition-all duration-300'>INITAILIZE_TRANSMISSION</button>
+              className='w-full h-12 font-[family-name:var(--font-kosugi)] bg-linear-to-r from-[#D4B783] to-[#E84A4A] font-bold rounded-lg p-5 flex items-center justify-center hover:scale-103 transition-all duration-300 cursor-pointer'>INITAILIZE_TRANSMISSION</button>
           </form>
       </div>
 

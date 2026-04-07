@@ -10,8 +10,8 @@ const About = () => {
       <div className='mt-[60px] flex justify-evenly font-[family-name:var(--font-kosugi)]'>
         <div className='flex-col text-start max-w-[490px] '>
           <h2 className='text-3xl font-extrabold  flex gap-4 ml-[-3px] mb-6'>Initializing <span className='text-[#D4B783] '>  Developer_Profile...</span> </h2>
-          <p className='mb-6 text-[#9CA3AF]'>I'm a Frontend-Focused Full-Stack Software Engineer. I build and ship production-grade web applications used by real users, with a strong foundation in system design, scalable architectures, and cloud-based deployments.</p>
-          <p className='mb-8 text-[#9CA3AF]'>With expertise spanning TypeScript, React, Node.js, and AWS, I engineer solutions that are scalable, efficient, and user-centric. I've also been recognized in competitive competitions like Samsung, Huawei, ICPC, and UGRF.</p>
+          <p className='mb-6 text-[#9CA3AF]'>I'm a B.Tech Computer Science student from Kerala and a Full-Stack Developer passionate about building modern, real-world web applications using the MERN stack and modern technologies.</p>
+          <p className='mb-8 text-[#9CA3AF]'>I’m also exploring AI-integrated applications and continuously improving my skills by developing scalable solutions through hands-on projects.</p>
           <div className='w-max bg-linear-to-r from-[#D4B783] to-[#E84A4A] font-bold rounded-lg p-5 flex items-center justify-center gap-2 hover:-translate-y-1 transition cursor-pointer'>
             <FileDown/>  
             <p> DOWNLOAD CV</p>
