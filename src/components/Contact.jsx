@@ -1,6 +1,48 @@
-import React from 'react'
 import {FaGithub,FaLinkedinIn,FaInstagram,FaWhatsapp,FaDiscord} from "react-icons/fa";
+import { useState } from 'react';
+import axios from 'axios';
+
 const Contact = () => {
+
+  const [name, setName] = useState('');
+  const [email , setEmail] = useState('');
+  const [message , setMessage] = useState('');
+  const [status , setStatus] = useState('INITAILIZE_TRANSMISSION');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+      const serviceId = import.meta.env.VITE_SERVICE;
+      const templateId = import.meta.env.VITE_TEMPLATE;
+      const publicKey = import.meta.env.VITE_PUBLIC;
+      const data = {
+        service_id: serviceId,
+        template_id: templateId,
+        user_id: publicKey,
+        template_params: {
+            title: "New Contact Message",
+            from_name: name,
+            from_email:  email,
+            from_message: message,
+        }
+    };
+    // send data to the mail
+    try {
+      setStatus('SENDING...');
+      const res = await axios.post('https://api.emailjs.com/api/v1.0/email/send', data);
+      console.log(res.data);
+      setName('');
+      setEmail('');
+      setMessage('')
+      setStatus('INITAILIZE_TRANSMISSION')
+    } catch (error) {
+        console.log(error);
+        setStatus('FAILED. TRY AGAIN');             // ← on error
+        setTimeout(() => setStatus('INITAILIZE_TRANSMISSION'), 3000);
+    }
+
+ }
+
   return (
     <div className='mt-[200px] mb-[50px] flex justify-center items-center flex-col z-10' id='contact'>
       <h1 className="text-5xl font-extrabold">
@@ -35,42 +77,48 @@ const Contact = () => {
                 ))}
               </div>
           </div>
-          <form className='flex flex-col gap-6 h-full' action="">
+          <form className='flex flex-col gap-6 h-full' onSubmit={handleSubmit}>
             {/* name */}
               <div className='flex flex-col items-start w-full gap-3'>
-                <label for='name' className='text-[#888f9a] text-xs '>YOUR NAME</label>
+                <label htmlFor='name' className='text-[#888f9a] text-xs '>YOUR NAME</label>
                 <input
                   className="border border-[#888f9a] w-100 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
                   id='name'
                   type="text"
                   placeholder="Enter your name...."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
                 />
               </div>
               {/* email */}
               <div className='flex flex-col items-start w-full gap-3'>
-                <label for='email' className='text-[#888f9a] text-xs'>YOUR EMAIL</label>
+                <label htmlFor='email' className='text-[#888f9a] text-xs'>YOUR EMAIL</label>
                 <input
                   className="border border-[#888f9a] w-100 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
                   id='email'
                   type='email'
                   placeholder="Enter your email...."
+                  value={email}
+                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </div>
               {/* message */}
               <div className='flex flex-col items-start w-full gap-3'>
-                <label for='message' className='text-[#888f9a] text-xs'>MESSAGE PAYLOAD</label>
+                <label htmlFor='message' className='text-[#888f9a] text-xs'>MESSAGE PAYLOAD</label>
                 <textarea
                   className="resize-none border border-[#888f9a] w-100 h-27 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
                   id='message'
                   placeholder="Enter your message...."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   required
                 />
               </div>
               {/* button */}
               <button type='submit'
-              className='w-full h-12 font-[family-name:var(--font-kosugi)] bg-linear-to-r from-[#D4B783] to-[#E84A4A] font-bold rounded-lg p-5 flex items-center justify-center hover:scale-103 transition-all duration-300 cursor-pointer'>INITAILIZE_TRANSMISSION</button>
+              className='w-full h-12 font-[family-name:var(--font-kosugi)] bg-linear-to-r from-[#D4B783] to-[#E84A4A] font-bold rounded-lg p-5 flex items-center justify-center hover:scale-103 transition-all duration-300 cursor-pointer'>{status}</button>
           </form>
       </div>
 

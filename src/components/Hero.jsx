@@ -25,7 +25,7 @@ const Hero = () => {
         </p>
 
         {/* Buttons */}
-        <div className="flex gap-4 w-full mt-6 text-sm font-[family-name:var(--font-kosugi)] text-l">
+        <a className="flex gap-4 w-full mt-6 text-sm font-[family-name:var(--font-kosugi)] text-l " href="#contact">
           <div className="relative flex-1 border border-[#D4B783] text-[#D4B783] p-3 flex items-center justify-center cursor-pointer group transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(212,183,131,0.2)]">
             <span className="absolute inset-0 bg-[#D4B783] w-0 group-hover:w-full transition-all duration-500 ease-in-out z-0"></span>
             <span className="relative z-10 group-hover:text-black transition duration-300">
@@ -37,7 +37,7 @@ const Hero = () => {
             <FileDown size={18} className="download-icon" />
             DOWNLOAD CV
           </div>
-        </div>
+        </a>
 
         {/* Icons */}
         <div className="flex gap-6 mt-8">
