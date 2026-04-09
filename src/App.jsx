@@ -8,7 +8,8 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Animation from './components/Animation';
-import Chatbot from './components/chatbot';
+import Chatbot from './components/Chatbot'
+
 const App = () => {
   return (
      <div className="relative z-10 min-h-screen flex flex-col  text-center">

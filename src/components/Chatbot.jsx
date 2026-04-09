@@ -18,27 +18,16 @@ const Chatbot = () => {
   setInput("");
   setLoading(true);
 
-  try {
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: input }),
-    });
+  // ⛔ Remove API call → use fake delay
+  setTimeout(() => {
+    const botMsg = {
+      sender: "bot",
+      text: "This is a demo response 🤖",
+    };
 
-    const data = await res.json();
-
-    const botMsg = { sender: "bot", text: data.reply };
     setMessages(prev => [...prev, botMsg]);
-  } catch {
-    setMessages(prev => [
-      ...prev,
-      { sender: "bot", text: "Error occurred" },
-    ]);
-  }
-
-  setLoading(false);
+    setLoading(false);
+  }, 1000);
 };
   return (
     <>
