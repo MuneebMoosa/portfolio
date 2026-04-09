@@ -44,32 +44,32 @@ const Contact = () => {
  }
 
   return (
-    <div className='mt-[200px] mb-[50px] flex justify-center items-center flex-col z-10' id='contact'>
-      <h1 className="text-5xl font-extrabold">
+    <div className='mt-[100px] md:mt-[200px] mb-[50px] flex justify-center items-center flex-col z-10 px-6' id='contact'>
+      <h1 className="text-4xl md:text-5xl font-extrabold text-center">
         SEND A<span className="text-[#9CA3AF]"> MESSAGE </span>
       </h1>
-      <p className="mt-10 mb-10 w-120 text-l text-[#9CA3AF] font-[family-name:var(--font-kosugi)]">
+      <p className="mt-6 md:mt-10 mb-10 w-full max-w-lg text-sm md:text-l text-[#9CA3AF] font-[family-name:var(--font-kosugi)] text-center">
          Whether you have a question or just want to say hi, I'll try my best to get back to you!
       </p>
-      <div className='max-w-6xl w-full h-100 flex gap-10 justify-center'>
-          <div className='bg-[#111114] p-10 h-full border rounded-lg border-[#1a1c1f] w-125 text-start hover:border-[#E84A4A] hover:shadow-[0_0_30px_rgba(212,183,131,0.2)] transition-all duration-300'>
+      <div className='max-w-6xl w-100 md:w-full h-auto flex flex-col lg:flex-row gap-10 justify-center items-stretch'>
+          <div className='bg-[#111114] p-6 md:p-10 h-auto border rounded-lg border-[#1a1c1f] w-full lg:w-1/2 text-start hover:border-[#E84A4A] hover:shadow-[0_0_30px_rgba(212,183,131,0.2)] transition-all duration-300'>
               <h1 className='text-2xl font-bold mb-6'>Establish Connection</h1>
               <div className='mb-5 group'>
                 <h2 className='text-sm text-[#9CA3AF] font-normal'>System Email</h2>
-                <p className='font-medium text-xl mb-5 text-white relative w-max transition-colors duration-300 group-hover:text-[#D4B783]'>
+                <p className='font-medium text-lg md:text-xl md:mb-5 text-white relative w-max transition-colors duration-300 group-hover:text-[#D4B783] break-all'>
                   muneebmoosavv@gmail.com
                   <span className='absolute left-0 -bottom-2 h-[2px] w-0 bg-[#D4B783] transition-all duration-300 group-hover:w-full'></span>
                 </p>
               </div>
-              <div className='mb-5 group'>
+              <div className='mb-5 md:mb-10 group'>
                 <h2 className='text-sm text-[#9CA3AF] font-normal'>Secure Line</h2>
-                <p className='font-medium text-xl mb-9 text-white relative w-max transition-colors duration-300 group-hover:text-[#D4B783]'>
+                <p className='font-medium text-xl md:mb-9 text-white relative w-max transition-colors duration-300 group-hover:text-[#D4B783]'>
                   +91 7356878374
                   <span className='absolute left-0 -bottom-2 h-[2px] w-0 bg-[#D4B783] transition-all duration-300 group-hover:w-full'></span>
                 </p>
               </div>
               <h2 className='font-semibold text-sm text-[#9CA3AF]'>SOCIAL NETWORKS:</h2>
-              <div className="flex gap-4 mt-4">
+              <div className="flex flex-wrap gap-4 mt-4">
                 {[FaGithub, FaLinkedinIn, FaInstagram, FaWhatsapp, FaDiscord].map((Icon, i) => (
                   <div key={i} className="w-10 h-10 bg-[#192029] flex items-center justify-center rounded-lg border border-white/20 text-gray-400 hover:text-[#D4B783] hover:bg-[#242220] hover:-translate-y-3  hover:border-[#D4B783] transition cursor-pointer transition-all duration-300">
                     <Icon />
@@ -77,12 +77,12 @@ const Contact = () => {
                 ))}
               </div>
           </div>
-          <form className='flex flex-col gap-6 h-full' onSubmit={handleSubmit}>
+          <form className='flex flex-col gap-6 w-full lg:w-1/2' onSubmit={handleSubmit}>
             {/* name */}
               <div className='flex flex-col items-start w-full gap-3'>
                 <label htmlFor='name' className='text-[#888f9a] text-xs '>YOUR NAME</label>
                 <input
-                  className="border border-[#888f9a] w-100 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
+                  className="border border-[#888f9a] w-full rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
                   id='name'
                   type="text"
                   placeholder="Enter your name...."
@@ -95,7 +95,7 @@ const Contact = () => {
               <div className='flex flex-col items-start w-full gap-3'>
                 <label htmlFor='email' className='text-[#888f9a] text-xs'>YOUR EMAIL</label>
                 <input
-                  className="border border-[#888f9a] w-100 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
+                  className="border border-[#888f9a] w-full rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
                   id='email'
                   type='email'
                   placeholder="Enter your email...."
@@ -108,7 +108,7 @@ const Contact = () => {
               <div className='flex flex-col items-start w-full gap-3'>
                 <label htmlFor='message' className='text-[#888f9a] text-xs'>MESSAGE PAYLOAD</label>
                 <textarea
-                  className="resize-none border border-[#888f9a] w-100 h-27 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
+                  className="resize-none border border-[#888f9a] w-full h-40 rounded-xl p-3 bg-[#10131f9e] placeholder-[#888f9a] text-sm font-[family-name:var(--font-kosugi)] focus:border-2 focus:border-[#D4B783] focus:outline-none transition"
                   id='message'
                   placeholder="Enter your message...."
                   value={message}

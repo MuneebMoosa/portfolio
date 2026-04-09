@@ -1,8 +1,10 @@
 import  { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
    useEffect(() => {
     const handleScroll = () => {
@@ -24,16 +26,17 @@ const Navbar = () => {
     <motion.nav 
       initial={{ backgroundColor: "rgba(0,0,0,0)" }}
         animate={{
-          backgroundColor: scrolled
+          backgroundColor: scrolled || mobileMenuOpen
             ? "#10131fba"
             : "rgba(0,0,0,0)",
-          backdropFilter: scrolled ? "blur(10px)" : "blur(0px)",
+          backdropFilter: scrolled || mobileMenuOpen ? "blur(10px)" : "blur(0px)",
         }}
         transition={{ duration: 0.3 }}
-      className="fixed top-0 left-0 pt-[10px] w-full flex justify-around items-center  z-50  font-[family-name:var(--font-kosugi)]">
-      <h1 className="text-[#D4B783] font-bold text-xl tracking-widest">MUNEEB MOOSA</h1>
+      className="fixed top-0 left-0 pt-[10px] w-full flex justify-between md:justify-around items-center px-6 md:px-0 z-50 font-[family-name:var(--font-kosugi)]">
+      <h1 className="text-[#D4B783] font-bold text-lg md:text-xl tracking-widest whitespace-nowrap">MUNEEB MOOSA</h1>
 
-      <div className="flex gap-10 text-sm p-4 text-gray-300">
+      {/* Desktop Menu */}
+      <div className="hidden md:flex gap-10 text-sm p-4 text-gray-300">
        {navItems.map((item) => (
           <a
             key={item.name}
@@ -53,8 +56,41 @@ const Navbar = () => {
           </a>
         ))}
       </div>
+
+      {/* Mobile Menu Toggle */}
+      <div className="md:hidden flex items-center p-4">
+        <button 
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="text-gray-300 hover:text-[#D4B783] transition-colors"
+        >
+          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="absolute top-full left-0 w-full bg-[#10131f] border-b border-[#D4B783]/20 md:hidden flex flex-col items-center py-6 gap-6"
+          >
+            {navItems.map((item) => (
+              <a
+                key={item.name}
+                href={item.link}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-gray-300 text-lg font-medium hover:text-[#E84A4A] transition-colors"
+              >
+                {item.name}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   )
 }
 
-export default Navbar
+export default Navbar

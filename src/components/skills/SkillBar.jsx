@@ -3,10 +3,10 @@ import { FaReact } from "react-icons/fa";
 const SkillBar = ({ name, percent, Icon }) => {
   return (
     <div className="w-full mb-5">
-      
+
       {/* Top Row */}
       <div className="w-[360px] flex justify-between items-center mb-2 text-[#9CA3AF]">
-        
+
         {/* Left: Icon + Name */}
         <div className="flex items-center gap-2">
           <Icon className="text-[#9CA3AF] text-lg" />
