@@ -12,7 +12,7 @@ import Chatbot from './components/Chatbot'
 
 const App = () => {
   return (
-     <div className="relative z-10 min-h-screen flex flex-col  text-center">
+     <div className="relative min-h-screen flex flex-col   text-center">
       <Animation/>
       <Navbar/>
       <Hero/>

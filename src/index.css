@@ -30,6 +30,9 @@ body::before {
 html {
   scroll-behavior: smooth;
 }
+html {
+  scroll-padding-top: 70px;
+}
 /* Scrollbar width */
 ::-webkit-scrollbar {
   width: 8px;

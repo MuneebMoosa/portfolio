@@ -7,20 +7,27 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from 'framer-motion';
 const Skills = () => {
   const containerRef = useRef(null)
-
+  
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   })
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-80%"])
+  const isMobile = window.innerWidth < 768;
+
+  const x = useTransform(
+    scrollYProgress,
+    [0, 1],
+    isMobile ? ["0%", "-450%"] : ["0%", "-90%"]
+  );
+  
   return (
     <div ref={containerRef} className="mb-[50px] md:mb-[100px]" id='skills'>
       <div className="h-[250vh] md:h-[300vh]">
         <div className="sticky top-0 h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
           <h1 className="text-3xl md:text-5xl font-extrabold text-center">  CORE <span className="text-[#9CA3AF]">COMPETENCIES</span></h1>
           <p className="mt-6 md:mt-10 mb-10 md:mb-20 text-sm md:text-l text-[#9CA3AF] font-[family-name:var(--font-kosugi)] text-center max-w-2xl"> The tools and technologies I use to build scalable, high-performance digital experiences.</p>
-          <div className="w-full max-w-[1200px] overflow-visible">
+          <div className="w-full max-w-[1200px] mx-auto px-6 md:px-10 overflow-hidden">
             <motion.div
               style={{ x }}
               className="flex gap-4 md:gap-6"

@@ -5,7 +5,7 @@ import TiltAnimation from './TiltAnimation'
 const About = () => {
    
   return (
-    <div className='mb-[100px] md:mb-[200px] pb-[100px] md:pb-[200px] px-6' id='about'>
+    <div className='mb-[100px] md:mb-[200px] pb-[100px] md:pb-[200px] px-6 z-10' id='about'>
       <h1 className='text-4xl md:text-5xl font-extrabold'>ABOUT <span className='text-[#9CA3AF]'>ME</span></h1>
       <div className='mt-[40px] md:mt-[60px] flex flex-col lg:flex-row items-center justify-center lg:justify-evenly gap-12 font-[family-name:var(--font-kosugi)]'>
         <div className='flex flex-col text-start w-full lg:max-w-[490px] '>
