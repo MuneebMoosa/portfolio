@@ -70,9 +70,9 @@ const Contact = () => {
                 </p>
               </div>
               <h2 className='font-semibold text-sm text-[#9CA3AF]'>SOCIAL NETWORKS:</h2>
-              <div className="flex flex-wrap gap-4 mt-4">
+              <div className="flex gap-4 mt-4">
                 {[FaGithub, FaLinkedinIn, FaInstagram, FaWhatsapp, FaDiscord].map((Icon, i) => (
-                  <div key={i} className="w-10 h-10 bg-[#192029] flex items-center justify-center rounded-lg border border-white/20 text-gray-400 hover:text-[#D4B783] hover:bg-[#242220] hover:-translate-y-3  hover:border-[#D4B783] transition cursor-pointer transition-all duration-300">
+                  <div key={i} className="w-8 h-8 md:w-10 md:h-10 bg-[#192029] flex items-center justify-center rounded-lg border border-white/20 text-gray-400 hover:text-[#D4B783] hover:bg-[#242220] hover:-translate-y-3  hover:border-[#D4B783] transition cursor-pointer transition-all duration-300">
                     <Icon />
                   </div>
                 ))}

@@ -37,6 +37,9 @@ html {
 ::-webkit-scrollbar {
   width: 8px;
 }
+/* html, body {
+  overflow-x: hidden;
+} */
 
 /* Track (background) */
 ::-webkit-scrollbar-track {
