@@ -5,11 +5,17 @@ import { motion } from "framer-motion";
 import "../components/Hero.css";
 
 const Hero = () => {
-
+  const socialLinks = [
+    { icon: FaGithub, link: "https://github.com/MuneebMoosa" },
+    { icon: FaLinkedinIn, link: "https://www.linkedin.com/in/muneeb-moosa-v-v-318270288" },
+    { icon: FaInstagram, link: "https://instagram.com/yourprofile" },
+    { icon: FaWhatsapp, link: "https://wa.me/7356878374" },
+    { icon: FaDiscord, link: "https://discord.com/users/1264980057945014345" },
+  ];
   const path = `M337.911 0.00854492L339.359 0.041748C400.593 1.96326 449.175 70.2468 448.156 153.461C447.13 237.33 396.107 304.607 334.192 303.727L332.744 303.694C274.396 301.863 227.535 239.777 224.129 161.934C221.455 243.803 171.121 308.791 110.263 307.927L108.814 307.893C47.5799 305.972 -1.00296 237.688 0.0157166 154.473C1.04262 70.6042 52.0665 3.32792 113.981 4.20776L115.43 4.24097C173.777 6.07221 220.636 68.157 224.042 145.999C226.716 64.1306 277.053 -0.856299 337.911 0.00854492Z`;
 
   return (
-    <div className='z-10 mt-[125px] md:mt-[150px] lg:mt-[250px] mb-[100px] md:mb-[150px] lg:mb-[250px] flex flex-col lg:flex-row items-center justify-center lg:justify-evenly gap-16 lg:gap-0 px-6'>
+    <div className='z-0 mt-[125px] md:mt-[150px] lg:mt-[250px] mb-[100px] md:mb-[150px] lg:mb-[250px] flex flex-col lg:flex-row items-center justify-center lg:justify-evenly gap-16 lg:gap-0 px-6'>
 
       <div className='text-center lg:text-start max-w-[490px] '>
         <h2 className='text-xl md:text-2xl ml-1 text-[#D4B783] font-[family-name:var(--font-kosugi)] '>Hi I'm</h2>
@@ -41,11 +47,18 @@ const Hero = () => {
 
         {/* Icons */}
         <div className="flex justify-center lg:justify-start gap-4 md:gap-6 mt-8">
-          {[FaGithub, FaLinkedinIn, FaInstagram, FaWhatsapp, FaDiscord].map((Icon, i) => (
-            <div key={i} className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full border border-white/20 text-gray-400 hover:text-[#D4B783] hover:border-[#D4B783] transition cursor-pointer">
+          {socialLinks.map((item, i) => {
+            const Icon = item.icon;
+            return(
+            <a key={i} 
+             href={item.link}
+             target="_blank"
+             rel="noopener noreferrer"
+             className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full border border-white/20 text-gray-400 hover:text-[#D4B783] hover:border-[#D4B783] transition cursor-pointer">
               <Icon size={16} className="md:w-5 md:h-5" />
-            </div>
-          ))}
+            </a>
+            );
+          })}
         </div>
       </div>
 

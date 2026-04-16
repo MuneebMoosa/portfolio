@@ -3,6 +3,13 @@ import { useState } from 'react';
 import axios from 'axios';
 
 const Contact = () => {
+  const socialLinks = [
+    { icon: FaGithub, link: "https://github.com/MuneebMoosa" },
+    { icon: FaLinkedinIn, link: "https://www.linkedin.com/in/muneeb-moosa-v-v-318270288" },
+    { icon: FaInstagram, link: "https://instagram.com/yourprofile" },
+    { icon: FaWhatsapp, link: "https://wa.me/7356878374" },
+    { icon: FaDiscord, link: "https://discord.com/users/1264980057945014345" },
+  ];
 
   const [name, setName] = useState('');
   const [email , setEmail] = useState('');
@@ -71,11 +78,18 @@ const Contact = () => {
               </div>
               <h2 className='font-semibold text-sm text-[#9CA3AF]'>SOCIAL NETWORKS:</h2>
               <div className="flex gap-4 mt-4">
-                {[FaGithub, FaLinkedinIn, FaInstagram, FaWhatsapp, FaDiscord].map((Icon, i) => (
-                  <div key={i} className="w-8 h-8 md:w-10 md:h-10 bg-[#192029] flex items-center justify-center rounded-lg border border-white/20 text-gray-400 hover:text-[#D4B783] hover:bg-[#242220] hover:-translate-y-3  hover:border-[#D4B783] transition cursor-pointer transition-all duration-300">
+                {socialLinks.map((Item, i) => {
+                  const Icon = Item.icon;
+                  return (
+                  <a 
+                    href={Item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    key={i} className="w-8 h-8 md:w-10 md:h-10 bg-[#192029] flex items-center justify-center rounded-lg border border-white/20 text-gray-400 hover:text-[#D4B783] hover:bg-[#242220] hover:-translate-y-3  hover:border-[#D4B783] transition cursor-pointer transition-all duration-300">
                     <Icon />
-                  </div>
-                ))}
+                  </a>
+                  ) 
+                })}
               </div>
           </div>
           <form className='flex flex-col gap-6 w-full lg:w-1/2' onSubmit={handleSubmit}>
