@@ -59,7 +59,7 @@ const Contact = () => {
          Whether you have a question or just want to say hi, I'll try my best to get back to you!
       </p>
       {/* main div start */}
-        <div className='max-w-6xl w-full h-auto flex flex-col lg:flex-row gap-10 justify-center items-stretch z-10'>
+        <div className='max-w-6xl w-full h-auto flex flex-col lg:flex-row gap-10 justify-center items-stretch z-0'>
           <div className='bg-[#111114] p-6 md:p-10 h-auto border rounded-lg border-[#1a1c1f] w-full lg:w-1/2 text-start hover:border-[#E84A4A] hover:shadow-[0_0_30px_rgba(212,183,131,0.2)] transition-all duration-300'>
               <h1 className='text-2xl font-bold mb-6'>Establish Connection</h1>
               <div className='mb-5 group'>
