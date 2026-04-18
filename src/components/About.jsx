@@ -2,6 +2,7 @@ import React from 'react'
 import {motion , useMotionValue , useSpring , useTransform} from "framer-motion"
 import { FileDown } from 'lucide-react'
 import TiltAnimation from './TiltAnimation'
+import Reveal from './animations/Reveal';
 const About = () => {
    
   return (
@@ -9,6 +10,7 @@ const About = () => {
       <h1 className='text-4xl md:text-5xl font-extrabold'>ABOUT <span className='text-[#9CA3AF]'>ME</span></h1>
       <div className='mt-[40px] md:mt-[60px] flex flex-col lg:flex-row items-center justify-center lg:justify-evenly gap-12 font-[family-name:var(--font-kosugi)]'>
         <div className='flex flex-col text-start w-full lg:max-w-[490px] '>
+          <Reveal>
           <h2 className='text-2xl md:text-3xl font-extrabold flex flex-wrap gap-2 md:gap-4 ml-[-3px] mb-6'>Initializing <span className='text-[#D4B783] '>  Developer_Profile...</span> </h2>
           <p className='mb-6 text-[#9CA3AF] text-sm md:text-base'>I'm a B.Tech Computer Science student from Kerala and a Full-Stack Developer passionate about building modern, real-world web applications using the MERN stack and modern technologies.</p>
           <p className='mb-8 text-[#9CA3AF] text-sm md:text-base'>I’m also exploring AI-integrated applications and continuously improving my skills by developing scalable solutions through hands-on projects.</p>
@@ -16,8 +18,10 @@ const About = () => {
             <FileDown size={20}/>  
             <p> DOWNLOAD CV</p>
           </div>
+          </Reveal>
        </div>
        {/* motion start */}
+       <Reveal>
        <TiltAnimation shadowColor="232,74,74" tilt={17} cursorShadow="56,62,72" radius="8px">
           <div className="w-full max-w-[490px] h-auto border-2 border-[#E84A4A] rounded-lg p-6 md:p-10 bg-[#0A0D16] overflow-x-auto">  
             {/* mac dots */}
@@ -41,6 +45,7 @@ const About = () => {
           </div>
           {/* motion ends */}
         </TiltAnimation>
+        </Reveal>
       </div>
     </div>
   )

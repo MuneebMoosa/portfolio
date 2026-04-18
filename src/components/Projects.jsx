@@ -1,6 +1,7 @@
 import { FaReact ,  FaGithub ,FaHtml5, FaCss3Alt} from "react-icons/fa";
 import { SiTailwindcss,SiRedux,SiExpress ,SiMongodb,  SiJavascript, SiGooglechrome } from "react-icons/si";
 import { Layers , Code , Puzzle } from "lucide-react";
+import Reveal from './animations/Reveal';
 import TiltAnimation from './TiltAnimation'
 const Projects = () => {
   return (
@@ -16,6 +17,7 @@ const Projects = () => {
       <div className='mt-16 md:mt-20 flex flex-col justify-center items-center gap-10'>
 
         {/* NEW ONE */}
+        <Reveal>
         <TiltAnimation shadowColor="none" tilt={3} cursorShadow="56,62,72" radius="8px">
         <div className='bg-[#111114] w-full max-w-[1040px] h-auto border border-[#1a1c1f] rounded-lg p-6 md:p-7 flex flex-col md:flex-row gap-8 md:gap-10 hover:border hover:border-[#E84A4A] transition-all duration-300 '>
           <div className='w-full md:w-[400px] aspect-video md:h-full bg-white rounded-lg border-1 border-[#28313d] z-10 flex-shrink-0'>
@@ -54,7 +56,9 @@ const Projects = () => {
           </div>
         </div>
         </TiltAnimation>
+        </Reveal>
         {/* new one */}
+        <Reveal>
         <TiltAnimation shadowColor="none" tilt={3} cursorShadow="56,62,72">
         <div className='bg-[#111114] w-full max-w-[1040px] h-auto border-1 border-[#1a1c1f] rounded-lg p-6 md:p-7 flex flex-col-reverse md:flex-row gap-8 md:gap-10 hover:border hover:border-[#E84A4A]  transition-all duration-300'>
           <div className='flex flex-col gap-6 md:gap-6 flex-1 z-10'>
@@ -84,7 +88,9 @@ const Projects = () => {
           </div>
         </div>
         </TiltAnimation>
+        </Reveal>
         {/* new one */}
+        <Reveal>
         <TiltAnimation shadowColor="none" tilt={3} cursorShadow="56,62,72">
         <div className='bg-[#111114] w-full max-w-[1040px] h-auto border-1 border-[#1a1c1f] rounded-lg p-6 md:p-7 flex flex-col md:flex-row gap-8 md:gap-10 hover:border hover:border-[#E84A4A]  transition-all duration-300'>
           <div className='w-full md:w-[400px] aspect-video md:h-full bg-white rounded-lg border-1 border-[#28313d] z-10 flex-shrink-0'>
@@ -114,6 +120,7 @@ const Projects = () => {
           </div>
         </div>
         </TiltAnimation>
+        </Reveal>
         {/* new one */}
       </div>
     </div>

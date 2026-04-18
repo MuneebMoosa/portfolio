@@ -2,6 +2,7 @@ import { FileDown } from 'lucide-react';
 import {FaGithub,FaLinkedinIn,FaInstagram,FaWhatsapp,FaDiscord} from "react-icons/fa";
 import heroImage from "../assets/happy.webp"
 import { motion } from "framer-motion";
+import { useState , useEffect } from 'react';
 import "../components/Hero.css";
 
 const Hero = () => {
@@ -14,16 +15,56 @@ const Hero = () => {
   ];
   const path = `M337.911 0.00854492L339.359 0.041748C400.593 1.96326 449.175 70.2468 448.156 153.461C447.13 237.33 396.107 304.607 334.192 303.727L332.744 303.694C274.396 301.863 227.535 239.777 224.129 161.934C221.455 243.803 171.121 308.791 110.263 307.927L108.814 307.893C47.5799 305.972 -1.00296 237.688 0.0157166 154.473C1.04262 70.6042 52.0665 3.32792 113.981 4.20776L115.43 4.24097C173.777 6.07221 220.636 68.157 224.042 145.999C226.716 64.1306 277.053 -0.856299 337.911 0.00854492Z`;
 
+  // name area start
+  const initialName = "منيب موسى";
+  const targetName = "MUNEEB MOOSA";
+
+  const [displayedName, setDisplayedName] = useState(initialName);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const current = [...initialName];
+      const target = [...targetName];
+
+      let index = 0;
+
+      const interval = setInterval(() => {
+        if (index < target.length) {
+          if (index < current.length) {
+            current[index] = target[index];
+          } else {
+            current.push(target[index]);
+          }
+
+          setDisplayedName(current.join(""));
+          index++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 80); // slightly faster = smoother feel
+
+      return () => clearInterval(interval);
+    }, 800); // faster start (better UX)
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const spaceIdx = displayedName.indexOf(" ");
+  const line1 = spaceIdx > 0 ? displayedName.slice(0, spaceIdx) : displayedName;
+  const line2 = spaceIdx > 0 ? displayedName.slice(spaceIdx + 1) : "";
   return (
     <div className='z-0 mt-[125px] md:mt-[150px] lg:mt-[250px] mb-[100px] md:mb-[150px] lg:mb-[250px] flex flex-col lg:flex-row items-center justify-center lg:justify-evenly gap-16 lg:gap-0 px-6'>
 
       <div className='text-center lg:text-start max-w-[490px] '>
-        <h2 className='text-xl md:text-2xl ml-1 text-[#D4B783] font-[family-name:var(--font-kosugi)] '>Hi I'm</h2>
-        <div className='text-6xl md:text-8xl font-extrabold flex flex-col text-center lg:text-start'>
-          <h1>MUNEEB</h1>
-          <h1 className='bg-linear-to-r from-[#D4B783] to-[#A08C64] bg-clip-text text-transparent'>MOOSA</h1>
-        </div>
+        <h2 className='text-xl md:text-2xl ml-1 text-[#D4B783] font-[family-name:var(--font-kosugi)]'>
+          Hi I'm
+        </h2>
 
+        <div className="text-6xl md:text-8xl font-extrabold flex flex-col h-[120px] md:h-[200px] ">
+          <h1>{line1}</h1>
+          <h1 className='bg-linear-to-r from-[#D4B783] to-[#A08C64] bg-clip-text text-transparent h-full'>
+            {line2}
+          </h1>
+        </div>
         <p className='font-[family-name:var(--font-kosugi)] text-[#9CA3AF] w-90 md:w-full mt-[20px] md:mt-[40px] text-sm md:text-base'>
           Computer Science student passionate about building modern,
           AI-driven web applications with clean design,
