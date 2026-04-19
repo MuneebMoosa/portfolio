@@ -51,6 +51,7 @@ const Hero = () => {
   const spaceIdx = displayedName.indexOf(" ");
   const line1 = spaceIdx > 0 ? displayedName.slice(0, spaceIdx) : displayedName;
   const line2 = spaceIdx > 0 ? displayedName.slice(spaceIdx + 1) : "";
+  //name area ends
   return (
     <div className='z-0 mt-[125px] md:mt-[150px] lg:mt-[250px] mb-[100px] md:mb-[150px] lg:mb-[250px] flex flex-col lg:flex-row items-center justify-center lg:justify-evenly gap-16 lg:gap-0 px-6'>
 
@@ -59,7 +60,7 @@ const Hero = () => {
           Hi I'm
         </h2>
 
-        <div className="text-6xl md:text-8xl font-extrabold flex flex-col h-[120px] md:h-[200px] ">
+        <div className="text-6xl md:text-8xl font-extrabold flex flex-col h-[140px] md:h-[200px] ">
           <h1>{line1}</h1>
           <h1 className='bg-linear-to-r from-[#D4B783] to-[#A08C64] bg-clip-text text-transparent h-full'>
             {line2}

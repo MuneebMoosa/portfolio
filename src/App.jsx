@@ -10,6 +10,9 @@ import Footer from './components/Footer';
 import Animation from './components/Animation';
 import Chatbot from './components/Chatbot';
 import Loader from './components/loader/Loader';
+
+// vecel analatycs
+import { Analytics } from "@vercel/analytics/react"
 const App = () => {
 
 const [loading , setLoading] = useState(true);
@@ -36,6 +39,7 @@ const [loading , setLoading] = useState(true);
         <Footer/>
         <Chatbot/>
       </div>}
+      <Analytics/>
     </>
      
   )
