@@ -1,6 +1,6 @@
 import { FileDown } from 'lucide-react';
 import {FaGithub,FaLinkedinIn,FaInstagram,FaWhatsapp,FaDiscord} from "react-icons/fa";
-import heroImage from "../assets/happy.webp"
+import heroImage from "../assets/image.webp"
 import { motion } from "framer-motion";
 import { useState , useEffect } from 'react';
 import "../components/Hero.css";

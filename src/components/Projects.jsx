@@ -1,5 +1,5 @@
-import { FaReact ,  FaGithub ,FaHtml5, FaCss3Alt} from "react-icons/fa";
-import { SiTailwindcss,SiRedux,SiExpress ,SiMongodb,  SiJavascript, SiGooglechrome } from "react-icons/si";
+import { FaReact ,  FaGithub ,FaHtml5, FaCss3Alt, FaNodeJs} from "react-icons/fa";
+import { SiTailwindcss,SiRedux,SiExpress ,SiMongodb,  SiJavascript, SiGooglechrome , SiWebrtc, SiSocketdotio } from "react-icons/si";
 import { Layers , Code , Puzzle } from "lucide-react";
 import Reveal from './animations/Reveal';
 import TiltAnimation from './TiltAnimation'
@@ -15,7 +15,45 @@ const Projects = () => {
       </p>
 
       <div className='mt-16 md:mt-20 flex flex-col justify-center items-center gap-10'>
+        {/* new one */}
+        <Reveal>
+        <TiltAnimation shadowColor="none" tilt={3} cursorShadow="56,62,72">
+        <div className='bg-[#111114] w-full max-w-[1040px] h-auto border-1 border-[#1a1c1f] rounded-lg p-6 md:p-7 flex flex-col-reverse md:flex-row gap-8 md:gap-10 hover:border hover:border-[#E84A4A]  transition-all duration-300'>
+          <div className='flex flex-col gap-6 md:gap-6 flex-1 z-10'>
+              <div className='flex flex-wrap gap-3 items-center'>
+                <h1 className='font-bold text-2xl md:text-3xl'>Pulse Chat</h1>
+                <div className='rounded-xl h-5 w-max text-[#A78BFA] text-bold border bg-[#1E1B2E] border-[#3B2F63] flex justify-center items-center px-3 py-3 gap-1 text-xs'>
+                  <Puzzle size={14}/> Full stack
+                </div>
+              </div>
+              <p className='text-start text-[#9CA3AF] text-sm md:text-base'>
+                A real-time stranger video chat platform with random user matching and peer-to-peer communication using WebRTC. Built features like chat, skip functionality, signaling with Socket.IO, and responsive real-time interaction.
+              </p>
+              <div className='flex flex-wrap gap-2 md:gap-4 '>
+                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#61DAFB] w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
+                     <FaReact/>React
+                  </div>
+                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#47A248] w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
+                    <FaNodeJs />Node.js
+                  </div>
+                  <div className='flex gap-2 items-center text-xs md:text-sm text-red-500 w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
+                    <SiWebrtc />WebRTC
+                  </div>
+                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#ffffff] w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
+                    <SiSocketdotio size={24} className="text-gray-200" />SocketIo
+                  </div>
+              </div>
+              <a className="rounded-sm bg-[#192029] h-10 border border-[#28313d] text-sm md:text-l font-bold flex items-center justify-center gap-3 hover:border-[#A78BFA] transition-all duration-300" href="https://github.com/MuneebMoosa/SeeEasy-accessibility-extension" target="_blank" rel="noopener noreferrer">
+                  <FaGithub/> Source Code
+              </a>
+          </div>
+          <div className='w-full md:w-[400px] aspect-video md:h-full bg-white rounded-lg border-1 border-[#28313d] z-10 flex-shrink-0'>
 
+          </div>
+        </div>
+        </TiltAnimation>
+        </Reveal>
+        {/* new one */}
         {/* NEW ONE */}
         <Reveal>
         <TiltAnimation shadowColor="none" tilt={3} cursorShadow="56,62,72" radius="8px">

@@ -65,7 +65,7 @@ const Contact = () => {
               <div className='mb-5 group'>
                 <h2 className='text-sm text-[#9CA3AF] font-normal'>System Email</h2>
                 <p className='font-medium text-lg md:text-xl md:mb-5 text-white relative w-max transition-colors duration-300 group-hover:text-[#D4B783] break-all'>
-                  muneebmoosavv@gmail.com
+                  muneebmoosavv07@gmail.com
                   <span className='absolute left-0 -bottom-2 h-[2px] w-0 bg-[#D4B783] transition-all duration-300 group-hover:w-full'></span>
                 </p>
               </div>
