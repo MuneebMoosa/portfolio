@@ -22,8 +22,8 @@ const Projects = () => {
           <div className='flex flex-col gap-6 md:gap-6 flex-1 z-10'>
               <div className='flex flex-wrap gap-3 items-center'>
                 <h1 className='font-bold text-2xl md:text-3xl'>Pulse Chat</h1>
-                <div className='rounded-xl h-5 w-max text-[#A78BFA] text-bold border bg-[#1E1B2E] border-[#3B2F63] flex justify-center items-center px-3 py-3 gap-1 text-xs'>
-                  <Puzzle size={14}/> Full stack
+                <div className='rounded-xl h-5 w-max text-[#61DAFB] text-bold border bg-[#192029] border-[#28313d] flex justify-center items-center px-3 py-3 gap-1 text-xs'>
+                  <Layers size={14}/> Full stack
                 </div>
               </div>
               <p className='text-start text-[#9CA3AF] text-sm md:text-base'>
@@ -43,7 +43,7 @@ const Projects = () => {
                     <SiSocketdotio size={24} className="text-gray-200" />SocketIo
                   </div>
               </div>
-              <a className="rounded-sm bg-[#192029] h-10 border border-[#28313d] text-sm md:text-l font-bold flex items-center justify-center gap-3 hover:border-[#A78BFA] transition-all duration-300" href="https://github.com/MuneebMoosa/SeeEasy-accessibility-extension" target="_blank" rel="noopener noreferrer">
+              <a className="rounded-sm bg-[#192029] h-10 border border-[#28313d] text-sm md:text-l font-bold flex items-center justify-center gap-3 hover:border-[#A78BFA] transition-all duration-300" href="https://github.com/MuneebMoosa/Pulse-chat" target="_blank" rel="noopener noreferrer">
                   <FaGithub/> Source Code
               </a>
           </div>

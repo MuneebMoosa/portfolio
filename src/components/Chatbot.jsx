@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Bot , ChevronRight } from "lucide-react";
 import { X } from 'lucide-react';
 import { AnimatePresence, motion } from "framer-motion";
-
+import  generateResponse  from "../utils/response";
+import  brain from "../data/chatbotBrain";
 const Chatbot = () => {
   const [open, setOpen] = useState(false);
 
@@ -13,21 +14,30 @@ const Chatbot = () => {
   const sendMessage = async () => {
   if (!input.trim()) return;
 
-  const userMsg = { sender: "user", text: input };
-  setMessages(prev => [...prev, userMsg]);
+  const userInput = input.trim();
+
+  const userMsg = {
+    sender: "user",
+    text: userInput,
+  };
+
+  setMessages((prev) => [...prev, userMsg]);
+
   setInput("");
   setLoading(true);
 
-  // ⛔ Remove API call → use fake delay
+  // fake typing effect
   setTimeout(() => {
+    const reply = generateResponse(userInput);
+
     const botMsg = {
       sender: "bot",
-      text: "This is a demo response 🤖",
+      text: reply,
     };
 
-    setMessages(prev => [...prev, botMsg]);
+    setMessages((prev) => [...prev, botMsg]);
     setLoading(false);
-  }, 1000);
+  }, 600);
 };
   return (
     <>
@@ -61,8 +71,8 @@ const Chatbot = () => {
                   key={i}
                   className={`p-2 rounded-lg w-fit max-w-[75%] ${
                     msg.sender === "user"
-                      ? "bg-[#D4B783] text-black ml-auto"
-                      : "bg-[#2a3441] text-white"
+                      ? "bg-[#D4B783] text-black ml-auto text-right"
+                      : "bg-[#2a3441] text-white text-left"
                   }`}
                 >
                   {msg.text}
