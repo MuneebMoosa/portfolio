@@ -1,4 +1,4 @@
-import { useState , useEffect } from 'react';
+// import { useState , useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -9,24 +9,24 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Animation from './components/Animation';
 import Chatbot from './components/Chatbot';
-import Loader from './components/loader/Loader';
+// import Loader from './components/loader/Loader';
 
 // vecel analatycs
 import { Analytics } from "@vercel/analytics/react"
 const App = () => {
 
-const [loading , setLoading] = useState(true);
+// const [loading , setLoading] = useState(true);
 
-  useEffect(() => {
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 5800);
+  // useEffect(() => {
+  //     const timer = setTimeout(() => {
+  //       setLoading(false);
+  //     }, 5800);
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
   return (
     <>
-      {loading ? <Loader /> : 
+      {/* {loading ? <Loader /> :  */}
       <div className=" overflow-x-clip relative min-h-screen flex flex-col text-center">
         <Animation/>
         <Navbar/>
@@ -38,7 +38,8 @@ const [loading , setLoading] = useState(true);
         <Contact/>
         <Footer/>
         <Chatbot/>
-      </div>}
+      </div>
+      {/* } */}
       <Analytics/>
     </>
      

@@ -4,7 +4,7 @@ import { FaReact, FaJs, FaServer, FaNodeJs, FaDatabase, FaGitAlt, FaGithub, FaDo
 import { SiTailwindcss, SiRedux, SiFramer, SiExpress, SiMongodb, SiMysql, SiPostman } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion , useScroll, useTransform } from 'framer-motion';
 const Skills = () => {
   const containerRef = useRef(null)
   
