@@ -1,5 +1,5 @@
 import express from "express";
-
+import { requireAdmin } from "../middlewares/requireAdmin.js";
 import {
   getProjects,
   getProjectById,
@@ -12,8 +12,9 @@ const router = express.Router();
 
 router.get("/", getProjects);
 router.get("/:id", getProjectById);
-router.post("/", createProject);
-router.patch("/:id", updateProject);
-router.delete("/:id", deleteProject);
+
+router.post("/",  requireAdmin, createProject);
+router.patch("/:id",  requireAdmin, updateProject);
+router.delete("/:id",  requireAdmin, deleteProject);
 
 export default router;

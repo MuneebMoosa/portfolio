@@ -1,168 +1,254 @@
-import { FaReact ,  FaGithub ,FaHtml5, FaCss3Alt, FaNodeJs} from "react-icons/fa";
-import { SiTailwindcss,SiRedux,SiExpress ,SiMongodb,  SiJavascript, SiGooglechrome , SiWebrtc, SiSocketdotio } from "react-icons/si";
-import { Layers , Code , Puzzle } from "lucide-react";
-import Reveal from './animations/Reveal';
-import TiltAnimation from './TiltAnimation'
+import { FaReact, FaGithub, FaCss3Alt, FaNodeJs, } from "react-icons/fa";
+import { SiTailwindcss, SiRedux, SiExpress, SiMongodb, SiJavascript, SiGooglechrome, SiWebrtc, SiSocketdotio, } from "react-icons/si";
+import { Layers, Code, Puzzle, FolderKanban, } from "lucide-react";
+import Reveal from "./animations/Reveal";
+import TiltAnimation from "./TiltAnimation";
+import { useGetProjectsQuery } from "../services/portfolioApi";
+
+// Maps icon names from MongoDB to React components.
+const iconRegistry = {
+  FaReact,
+  FaCss3Alt,
+  FaNodeJs,
+  FaGithub,
+  SiTailwindcss,
+  SiRedux,
+  SiExpress,
+  SiMongodb,
+  SiJavascript,
+  SiGooglechrome,
+  SiWebrtc,
+  SiSocketdotio,
+  Layers,
+  Code,
+  Puzzle,
+  FolderKanban,
+};
+
+const typeStyles = {
+  "Full Stack": {
+    color: "text-[#61DAFB]",
+    background: "bg-[#192029]",
+    border: "border-[#28313d]",
+  },
+  Frontend: {
+    color: "text-[#3aad3d]",
+    background: "bg-[#192029]",
+    border: "border-[#235025]",
+  },
+  Backend: {
+    color: "text-[#47A248]",
+    background: "bg-[#192029]",
+    border: "border-[#28313d]",
+  },
+  "Chrome Extension": {
+    color: "text-[#A78BFA]",
+    background: "bg-[#1E1B2E]",
+    border: "border-[#3B2F63]",
+  },
+  "AI/ML": {
+    color: "text-[#A78BFA]",
+    background: "bg-[#1E1B2E]",
+    border: "border-[#3B2F63]",
+  },
+  "Mobile App": {
+    color: "text-[#61DAFB]",
+    background: "bg-[#192029]",
+    border: "border-[#28313d]",
+  },
+  Other: {
+    color: "text-[#9CA3AF]",
+    background: "bg-[#192029]",
+    border: "border-[#28313d]",
+  },
+};
+
+const technologyColors = {
+  FaReact: "text-[#61DAFB]",
+  FaNodeJs: "text-[#47A248]",
+  FaCss3Alt: "text-[#1572B6]",
+  SiTailwindcss: "text-[#38BDF8]",
+  SiRedux: "text-[#764ABC]",
+  SiExpress: "text-white",
+  SiMongodb: "text-[#47A248]",
+  SiJavascript: "text-[#F7DF1E]",
+  SiGooglechrome: "text-[#4285F4]",
+  SiWebrtc: "text-red-500",
+  SiSocketdotio: "text-gray-200",
+};
+
 const Projects = () => {
+  const {
+    data: response,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetProjectsQuery();
+
+  const projects = response?.data ?? [];
+
   return (
-    <div className='mt-[100px] md:mt-[200px] mb-[50px] px-6' id="projects">
+    <section
+      className="mt-[100px] md:mt-[200px] mb-[50px] px-6"
+      id="projects"
+    >
       <h1 className="text-4xl md:text-5xl font-extrabold text-center">
-        MY<span className="text-[#9CA3AF]"> PROJECTS </span>
+        MY<span className="text-[#9CA3AF]"> PROJECTS</span>
       </h1>
 
-      <p className="mt-6 md:mt-10 text-sm md:text-l text-[#9CA3AF] font-[family-name:var(--font-kosugi)] text-center max-w-2xl mx-auto">
-        A collection of projects built across different technologies, focused on solving real-world problems and continuous learning.
+      <p className="mt-6 md:mt-10 text-sm md:text-base text-[#9CA3AF] font-[family-name:var(--font-kosugi)] text-center max-w-2xl mx-auto">
+        A collection of projects built across different technologies,
+        focused on solving real-world problems and continuous learning.
       </p>
 
-      <div className='mt-16 md:mt-20 flex flex-col justify-center items-center gap-10'>
-        {/* new one */}
-        <Reveal>
-        <TiltAnimation shadowColor="none" tilt={3} cursorShadow="56,62,72">
-        <div className='bg-[#111114] w-full max-w-[1040px] h-auto border-1 border-[#1a1c1f] rounded-lg p-6 md:p-7 flex flex-col-reverse md:flex-row gap-8 md:gap-10 hover:border hover:border-[#E84A4A]  transition-all duration-300'>
-          <div className='flex flex-col gap-6 md:gap-6 flex-1 z-10'>
-              <div className='flex flex-wrap gap-3 items-center'>
-                <h1 className='font-bold text-2xl md:text-3xl'>Pulse Chat</h1>
-                <div className='rounded-xl h-5 w-max text-[#61DAFB] text-bold border bg-[#192029] border-[#28313d] flex justify-center items-center px-3 py-3 gap-1 text-xs'>
-                  <Layers size={14}/> Full stack
-                </div>
-              </div>
-              <p className='text-start text-[#9CA3AF] text-sm md:text-base'>
-                A real-time stranger video chat platform with random user matching and peer-to-peer communication using WebRTC. Built features like chat, skip functionality, signaling with Socket.IO, and responsive real-time interaction.
-              </p>
-              <div className='flex flex-wrap gap-2 md:gap-4 '>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#61DAFB] w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                     <FaReact/>React
-                  </div>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#47A248] w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <FaNodeJs />Node.js
-                  </div>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-red-500 w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <SiWebrtc />WebRTC
-                  </div>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#ffffff] w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <SiSocketdotio size={24} className="text-gray-200" />SocketIo
-                  </div>
-              </div>
-              <a className="rounded-sm bg-[#192029] h-10 border border-[#28313d] text-sm md:text-l font-bold flex items-center justify-center gap-3 hover:border-[#A78BFA] transition-all duration-300" href="https://github.com/MuneebMoosa/Pulse-chat" target="_blank" rel="noopener noreferrer">
-                  <FaGithub/> Source Code
-              </a>
-          </div>
-          <div className='w-full md:w-[400px] aspect-video md:h-full bg-white rounded-lg border-1 border-[#28313d] z-10 flex-shrink-0'>
+      <div className="mt-16 md:mt-20 flex flex-col justify-center items-center gap-10">
+        {isLoading && (
+          <p className="text-[#9CA3AF] text-center">
+            Loading projects...
+          </p>
+        )}
 
-          </div>
-        </div>
-        </TiltAnimation>
-        </Reveal>
-        {/* new one */}
-        {/* NEW ONE */}
-        <Reveal>
-        <TiltAnimation shadowColor="none" tilt={3} cursorShadow="56,62,72" radius="8px">
-        <div className='bg-[#111114] w-full max-w-[1040px] h-auto border border-[#1a1c1f] rounded-lg p-6 md:p-7 flex flex-col md:flex-row gap-8 md:gap-10 hover:border hover:border-[#E84A4A] transition-all duration-300 '>
-          <div className='w-full md:w-[400px] aspect-video md:h-full bg-white rounded-lg border-1 border-[#28313d] z-10 flex-shrink-0'>
+        {isError && (
+          <div className="text-center text-[#9CA3AF]">
+            <p>Unable to load projects. Please try again.</p>
 
+            <button
+              onClick={() => refetch()}
+              className="mt-3 rounded-sm border border-[#28313d] px-4 py-2 hover:border-[#E84A4A] transition-all"
+            >
+              Retry
+            </button>
           </div>
-          <div className='flex flex-col gap-6 md:gap-8 flex-1 z-10'>
-              <div className='flex flex-wrap gap-3 items-center'>
-                <h1 className='font-bold text-2xl md:text-3xl'>Movie App </h1>
-                <div className='rounded-xl h-5 w-max text-[#61DAFB] text-bold border bg-[#192029] border-[#28313d] flex justify-center items-center px-3 py-3 gap-1 text-xs'>
-                  <Layers size={14}/> Full Stack
-                </div>
-              </div>
-              <p className=' text-start text-[#9CA3AF] text-sm md:text-base'>
-                A full-stack movie app where users can search and explore movies. Built using React, Redux, Express, and MongoDB with a focus on smooth user experience and clean design.
-              </p>
-              <div className='flex flex-wrap gap-2 md:gap-4'>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#61DAFB] w-max bg-[#192029] border-1 border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <FaReact/>React
-                  </div>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#764ABC] w-max bg-[#192029] border-1 border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <SiRedux/>Redux
-                  </div>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#000000] w-max bg-[#192029] border-1 border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <SiExpress/>Express
-                  </div>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#47A248] w-max bg-[#192029] border-1 border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <SiMongodb/>MongoDB
-                  </div>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#38BDF8] w-max bg-[#192029] border-1 border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <SiTailwindcss/>TailwindCSS
-                  </div>
-              </div>
-              <a className="rounded-sm bg-[#192029] h-10 border border-[#28313d] text-sm md:text-l font-bold flex items-center justify-center gap-3 hover:border-[#61DAFB] transition-all duration-300" href="https://github.com/MuneebMoosa/Movie-App" target="_blank" rel="noopener noreferrer">
-                  <FaGithub/> Source Code
-              </a>
-          </div>
-        </div>
-        </TiltAnimation>
-        </Reveal>
-        {/* new one */}
-        <Reveal>
-        <TiltAnimation shadowColor="none" tilt={3} cursorShadow="56,62,72">
-        <div className='bg-[#111114] w-full max-w-[1040px] h-auto border-1 border-[#1a1c1f] rounded-lg p-6 md:p-7 flex flex-col-reverse md:flex-row gap-8 md:gap-10 hover:border hover:border-[#E84A4A]  transition-all duration-300'>
-          <div className='flex flex-col gap-6 md:gap-6 flex-1 z-10'>
-              <div className='flex flex-wrap gap-3 items-center'>
-                <h1 className='font-bold text-2xl md:text-3xl'>See Easy </h1>
-                <div className='rounded-xl h-5 w-max text-[#A78BFA] text-bold border bg-[#1E1B2E] border-[#3B2F63] flex justify-center items-center px-3 py-3 gap-1 text-xs'>
-                  <Puzzle size={14}/> Extension
-                </div>
-              </div>
-              <p className='text-start text-[#9CA3AF] text-sm md:text-base'>
-                A Chrome extension that improves web accessibility for color-blind users and developers by enhancing color visibility, checking WCAG contrast, and providing tools like auto scan, eyedropper, and vision simulation.
-              </p>
-              <div className='flex flex-wrap gap-2 md:gap-4 '>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#F7DF1E] w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <SiJavascript/>JavaScript
-                  </div>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#4285F4] w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <SiGooglechrome/>Chrome API
-                  </div>
-              </div>
-              <a className="rounded-sm bg-[#192029] h-10 border border-[#28313d] text-sm md:text-l font-bold flex items-center justify-center gap-3 hover:border-[#A78BFA] transition-all duration-300" href="https://github.com/MuneebMoosa/SeeEasy-accessibility-extension" target="_blank" rel="noopener noreferrer">
-                  <FaGithub/> Source Code
-              </a>
-          </div>
-          <div className='w-full md:w-[400px] aspect-video md:h-full bg-white rounded-lg border-1 border-[#28313d] z-10 flex-shrink-0'>
+        )}
 
-          </div>
-        </div>
-        </TiltAnimation>
-        </Reveal>
-        {/* new one */}
-        <Reveal>
-        <TiltAnimation shadowColor="none" tilt={3} cursorShadow="56,62,72">
-        <div className='bg-[#111114] w-full max-w-[1040px] h-auto border-1 border-[#1a1c1f] rounded-lg p-6 md:p-7 flex flex-col md:flex-row gap-8 md:gap-10 hover:border hover:border-[#E84A4A]  transition-all duration-300'>
-          <div className='w-full md:w-[400px] aspect-video md:h-full bg-white rounded-lg border-1 border-[#28313d] z-10 flex-shrink-0'>
+        {!isLoading && !isError && projects.length === 0 && (
+          <p className="text-[#9CA3AF] text-center">
+            No projects available yet.
+          </p>
+        )}
 
-          </div>
-          <div className='flex flex-col gap-6 md:gap-8 flex-1 z-10'>
-              <div className='flex flex-wrap gap-3 items-center'>
-                <h1 className='font-bold text-2xl md:text-3xl'>Book Tracker </h1>
-                <div className='rounded-xl h-5 w-max text-[#3aad3d] text-bold border bg-[#192029] border-[#235025] flex justify-center items-center px-3 py-3 gap-1 text-xs'>
-                  <Code size={14}/> Frontend
-                </div>
+        {projects.map((project, index) => {
+          const typeName =
+            typeof project.type === "string"
+              ? project.type
+              : project.type?.name;
+
+          const TypeIcon =
+            iconRegistry[
+              typeof project.type === "object"
+                ? project.type?.icon
+                : ""
+            ] ?? FolderKanban;
+
+          const badgeStyle = typeStyles[typeName] ?? typeStyles.Other;
+
+          const reversed = index % 2 === 1;
+
+          return (
+            <Reveal key={project._id}>
+              {/* Fixed width wrapper for every project card */}
+              <div className="w-full min-w-0 max-w-[1040px] mx-auto">
+                <TiltAnimation
+                  shadowColor="none"
+                  tilt={3}
+                  cursorShadow="56,62,72"
+                  radius="8px"
+                >
+                  <article
+                    className={`w-full min-w-0 box-border bg-[#111114] border border-[#1a1c1f] rounded-lg p-6 md:p-7 flex flex-col ${
+                      reversed ? "md:flex-row-reverse" : "md:flex-row"
+                    } gap-8 md:gap-10 hover:border-[#E84A4A] transition-all duration-300`}
+                  >
+                    {/* Project image */}
+                    <div className="w-full md:w-[400px] md:flex-shrink-0 aspect-video bg-white rounded-lg border border-[#28313d] z-10">
+                      {project.image && (
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          loading="lazy"
+                          className="w-full h-full object-cover rounded-lg"
+                        />
+                      )}
+                    </div>
+
+                    {/* Keep your existing project details div here */}
+
+                    {/* Project details */}
+                    <div className="flex flex-col gap-6 md:gap-8 flex-1 min-w-0 z-10">
+                      <div className="flex flex-wrap gap-3 items-center">
+                        <h2 className="font-bold text-2xl md:text-3xl">
+                          {project.title}
+                        </h2>
+
+                        <div
+                          className={`rounded-xl min-h-5 w-max ${badgeStyle.color} border ${badgeStyle.background} ${badgeStyle.border} flex justify-center items-center px-3 py-2 gap-1 text-xs`}
+                        >
+                          <TypeIcon size={14} />
+                          {typeName}
+                        </div>
+                      </div>
+
+                      <p className="text-start text-[#9CA3AF] text-sm md:text-base">
+                        {project.description}
+                      </p>
+
+                      {/* Technology badges */}
+                      <div className="flex flex-wrap gap-2 md:gap-4">
+                        {(project.techStack ?? []).map((tech) => {
+                          const TechIcon =
+                            iconRegistry[tech.icon] ?? Code;
+
+                          const iconColor =
+                            technologyColors[tech.icon] ??
+                            "text-[#9CA3AF]";
+
+                          return (
+                            <div
+                              key={tech.name}
+                              className={`flex gap-2 items-center text-xs md:text-sm ${iconColor} w-max bg-[#192029] border border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300`}
+                            >
+                              <TechIcon />
+                              {tech.name}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Project links */}
+                      <div className="flex w-full gap-3">
+                        {project.githubUrl && (
+                          <a
+                            className="flex-1 min-w-0 rounded-sm bg-[#192029] min-h-10 border border-[#28313d] text-sm md:text-base font-bold flex items-center justify-center gap-3 px-3 py-2 hover:border-[#A78BFA] transition-all duration-300"
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <FaGithub />
+                            Source Code
+                          </a>
+                        )}
+
+                        {project.liveUrl && (
+                          <a
+                            className="flex-1 min-w-0 rounded-sm bg-[#192029] min-h-10 border border-[#28313d] text-sm md:text-base font-bold flex items-center justify-center gap-3 px-3 py-2 hover:border-[#61DAFB] transition-all duration-300"
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            View Live Project
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                </TiltAnimation>
               </div>
-              <p className=' text-start text-[#9CA3AF] text-sm md:text-base'>
-                A simple React app to manage your personal reading list. Users can add books, track their status (Wishlist, Reading, Completed), write notes, and store everything using local storage.
-              </p>
-              <div className='flex flex-wrap gap-2 md:gap-4 '>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#61DAFB] w-max bg-[#192029] border-1 border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <FaReact/>React
-                  </div>
-                  <div className='flex gap-2 items-center text-xs md:text-sm text-[#1572B6] w-max bg-[#192029] border-1 border-[#28313d] rounded-sm px-2 py-1 hover:border-[#D4B783] transition-all duration-300'>
-                    <FaCss3Alt/>CSS
-                  </div>
-              </div>
-              <a className="rounded-sm bg-[#192029] h-10 border border-[#28313d] text-sm md:text-l font-bold flex items-center justify-center gap-3 hover:border-[#3aad3d] transition-all duration-300" href="https://github.com/MuneebMoosa/Book-Tracker" target="_blank" rel="noopener noreferrer">
-                  <FaGithub/> Source Code
-              </a>
-          </div>
-        </div>
-        </TiltAnimation>
-        </Reveal>
-        {/* new one */}
+            </Reveal>
+          );
+        })}
       </div>
-    </div>
-  )
-}
+    </section>
+  );
+};
 
-export default Projects
+export default Projects;

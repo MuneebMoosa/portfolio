@@ -1,6 +1,46 @@
 
 import mongoose from "mongoose";
 
+const projectTypeSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      enum: [
+        "Full Stack",
+        "Frontend",
+        "Backend",
+        "Chrome Extension",
+        "AI/ML",
+        "Mobile App",
+        "Other",
+      ],
+    },
+    icon: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  { _id: false }
+);
+
+const technologySchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    icon: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  { _id: false }
+);
+
 const projectSchema = new mongoose.Schema(
   {
     title: {
@@ -14,20 +54,11 @@ const projectSchema = new mongoose.Schema(
       trim: true,
     },
     type: {
-      type: String,
+      type: projectTypeSchema,
       required: true,
-      enum: [
-        "Full Stack",
-        "Frontend",
-        "Backend",
-        "Chrome Extension",
-        "AI/ML",
-        "Mobile App",
-        "Other",
-      ],
     },
     techStack: {
-      type: [String],
+      type: [technologySchema],
       default: [],
     },
     image: {

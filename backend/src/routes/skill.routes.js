@@ -1,6 +1,5 @@
-
 import express from "express";
-
+import { requireAdmin } from "../middlewares/requireAdmin.js";
 import {
   getSkills,
   getSkillById,
@@ -21,21 +20,21 @@ router.get("/", getSkills);
 router.get("/:id", getSkillById);
 
 // Create a new category
-router.post("/", createSkillCategory);
+router.post("/",requireAdmin, createSkillCategory);
 
 // Update category details
-router.patch("/:id", updateSkillCategory);
+router.patch("/:id",requireAdmin, updateSkillCategory);
 
 // Add a skill to an existing category
-router.post("/:id/items", addSkillItem);
+router.post("/:id/items",requireAdmin, addSkillItem);
 
 // Update a skill within a category
-router.patch("/:id/items/:skillName", updateSkillItem);
+router.patch("/:id/items/:skillName",requireAdmin, updateSkillItem);
 
 // Remove a skill from a category
-router.delete("/:id/items/:skillName", deleteSkillItem);
+router.delete("/:id/items/:skillName", requireAdmin,deleteSkillItem);
 
 // Delete an entire category
-router.delete("/:id", deleteSkillCategory);
+router.delete("/:id",requireAdmin, deleteSkillCategory);
 
 export default router;
