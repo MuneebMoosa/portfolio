@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "ai-service",
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.analysis.extraPaths": ["."],
+		"python.analysis.autoSearchPaths": true,
+		// Packages are installed inside the Docker image only, so Pylance
+		// cannot see fastapi/groq/pydantic from a host interpreter.
+		"python.analysis.diagnosticSeverityOverrides": {
+			"reportMissingImports": "none"
+		}
+	}
+}
