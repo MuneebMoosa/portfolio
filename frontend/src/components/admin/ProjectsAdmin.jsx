@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetProjectsQuery, useCreateProjectMutation, useUpdateProjectMutation, useDeleteProjectMutation, } from "../../services/portfolioApi";
 
 const PROJECT_TYPES = [
@@ -19,7 +19,6 @@ const emptyForm = {
     icon: "Layers",
   },
   techStack: "",
-  image: "",
   liveUrl: "",
   githubUrl: "",
   featured: false,
@@ -29,6 +28,9 @@ const emptyForm = {
 const inputClass = "w-full rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2.5 text-sm text-white outline-none transition focus:border-[#D4B783]";
 
 const labelClass = "mb-1.5 block text-sm text-zinc-300";
+
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
 function getErrorMessage(error) {
   return (
@@ -53,7 +55,6 @@ function ProjectForm({ initialProject, onCancel, onSave, isSaving, saveError, })
       techStack: (initialProject.techStack || [])
         .map((technology) => `${technology.name}|${technology.icon}`)
         .join("\n"),
-      image: initialProject.image || "",
       liveUrl: initialProject.liveUrl || "",
       githubUrl: initialProject.githubUrl || "",
       featured: initialProject.featured || false,
@@ -62,6 +63,69 @@ function ProjectForm({ initialProject, onCancel, onSave, isSaving, saveError, })
   });
 
   const [validationError, setValidationError] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(
+    initialProject?.image || ""
+  );
+  const [imageError, setImageError] = useState("");
+  const imageObjectUrlRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (imageObjectUrlRef.current) {
+        URL.revokeObjectURL(imageObjectUrlRef.current);
+      }
+    };
+  }, []);
+
+  const resetImagePreview = () => {
+    if (imageObjectUrlRef.current) {
+      URL.revokeObjectURL(imageObjectUrlRef.current);
+      imageObjectUrlRef.current = null;
+    }
+
+    setImageFile(null);
+    setImagePreview(initialProject?.image || "");
+  };
+
+  const selectImageFile = (file) => {
+    if (imageObjectUrlRef.current) {
+      URL.revokeObjectURL(imageObjectUrlRef.current);
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+
+    imageObjectUrlRef.current = objectUrl;
+    setImageFile(file);
+    setImagePreview(objectUrl);
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      resetImagePreview();
+      setImageError("");
+      return;
+    }
+
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      setImageError("Choose a JPG, PNG or WebP image.");
+      event.target.value = "";
+      resetImagePreview();
+      return;
+    }
+
+    if (file.size > MAX_IMAGE_SIZE) {
+      setImageError("The image must be 5 MB or smaller.");
+      event.target.value = "";
+      resetImagePreview();
+      return;
+    }
+
+    setImageError("");
+    selectImageFile(file);
+  };
 
   const updateField = (field, value) => {
     setForm((previous) => ({ ...previous, [field]: value }));
@@ -117,12 +181,28 @@ function ProjectForm({ initialProject, onCancel, onSave, isSaving, saveError, })
         icon: form.type.icon.trim(),
       },
       techStack: technologies,
-      image: form.image.trim(),
       liveUrl: form.liveUrl.trim(),
       githubUrl: form.githubUrl.trim(),
       featured: form.featured,
       order: Number(form.order) || 0,
     };
+
+    if (imageFile) {
+      const formData = new FormData();
+
+      formData.append("title", payload.title);
+      formData.append("description", payload.description);
+      formData.append("type", JSON.stringify(payload.type));
+      formData.append("techStack", JSON.stringify(payload.techStack));
+      formData.append("liveUrl", payload.liveUrl);
+      formData.append("githubUrl", payload.githubUrl);
+      formData.append("featured", String(payload.featured));
+      formData.append("order", String(payload.order));
+      formData.append("image", imageFile);
+
+      await onSave(formData);
+      return;
+    }
 
     await onSave(payload);
   };
@@ -218,14 +298,41 @@ function ProjectForm({ initialProject, onCancel, onSave, isSaving, saveError, })
       </div>
 
       <div>
-        <label className={labelClass}>Image URL</label>
+        <label className={labelClass}>Project image</label>
+
+        {imagePreview ? (
+          <div className="mb-3 overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900">
+            <img
+              src={imagePreview}
+              alt="Project preview"
+              className="aspect-video w-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="mb-3 flex aspect-video items-center justify-center rounded-lg border border-dashed border-zinc-700 bg-zinc-900 text-sm text-zinc-500">
+            No image selected
+          </div>
+        )}
+
         <input
-          className={inputClass}
-          type="url"
-          value={form.image}
-          onChange={(e) => updateField("image", e.target.value)}
-          placeholder="https://..."
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={handleImageChange}
+          className="block w-full text-sm text-zinc-400 file:mr-3 file:rounded-md file:border-0 file:bg-[#D4B783] file:px-3 file:py-2 file:text-sm file:font-semibold file:text-zinc-950 hover:file:bg-[#e5cda2]"
         />
+
+        <p className="mt-1.5 text-xs text-zinc-500">
+          JPG, PNG or WebP. Maximum 5 MB.
+          {initialProject
+            ? " Choose a new file to replace the current image."
+            : ""}
+        </p>
+
+        {imageError && (
+          <p className="mt-1.5 text-xs text-red-300">
+            {imageError}
+          </p>
+        )}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -346,10 +453,17 @@ export default function ProjectsAdmin() {
 
     try {
       if (editingProject) {
-        await updateProject({
-          id: editingProject._id,
-          ...payload,
-        }).unwrap();
+        if (payload instanceof FormData) {
+          await updateProject({
+            id: editingProject._id,
+            formData: payload,
+          }).unwrap();
+        } else {
+          await updateProject({
+            id: editingProject._id,
+            ...payload,
+          }).unwrap();
+        }
 
         setSuccessMessage("Project updated successfully.");
       } else {

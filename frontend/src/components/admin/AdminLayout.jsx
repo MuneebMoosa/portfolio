@@ -4,6 +4,7 @@ import {
   FolderKanban,
   Code2,
   GraduationCap,
+  FileText,
   LogOut,
   Menu,
   X,
@@ -33,6 +34,11 @@ const navItems = [
     name: "Journey",
     path: "/admin/journey",
     icon: GraduationCap,
+  },
+  {
+    name: "CV",
+    path: "/admin/cv",
+    icon: FileText,
   },
 ];
 

@@ -1,44 +1,162 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bot , ChevronRight } from "lucide-react";
 import { X } from 'lucide-react';
 import { AnimatePresence, motion } from "framer-motion";
-import  generateResponse  from "../utils/response";
-import  brain from "../data/chatbotBrain";
+import { deleteChatSession, sendChatMessage } from "../services/aiApi";
+
+const SESSION_STORAGE_KEY = "portfolio_chat_session_id";
+
+function LinkifiedText({ text }) {
+  const parts = [];
+  const urlPattern =
+    /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<>"']+)/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = urlPattern.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+
+    const label = match[1] || match[3];
+    let url = match[2] || match[3];
+    let trailing = "";
+
+    if (!match[1]) {
+      const trailingMatch = url.match(/[.,!?;:]+$/);
+
+      if (trailingMatch) {
+        trailing = trailingMatch[0];
+        url = url.slice(0, -trailing.length);
+      }
+    }
+
+    parts.push(
+      <a
+        key={`${match.index}-${url}`}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline break-all hover:text-[#D4B783]"
+      >
+        {label}
+      </a>
+    );
+
+    if (trailing) {
+      parts.push(trailing);
+    }
+
+    lastIndex = urlPattern.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts;
+}
+
 const Chatbot = () => {
   const [open, setOpen] = useState(false);
 
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const sessionIdRef = useRef(sessionStorage.getItem(SESSION_STORAGE_KEY));
+  const sendingRef = useRef(false);
+  const messagesRef = useRef(null);
 
-  const sendMessage = async () => {
-  if (!input.trim()) return;
+  useEffect(() => {
+    const container = messagesRef.current;
 
-  const userInput = input.trim();
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [messages, loading, open]);
 
-  const userMsg = {
-    sender: "user",
-    text: userInput,
+  const startSession = () => {
+    let sessionId =
+      sessionIdRef.current || sessionStorage.getItem(SESSION_STORAGE_KEY);
+
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      sessionStorage.setItem(SESSION_STORAGE_KEY, sessionId);
+    }
+
+    sessionIdRef.current = sessionId;
+    return sessionId;
   };
 
-  setMessages((prev) => [...prev, userMsg]);
+  const openChat = () => {
+    startSession();
+    setOpen(true);
+  };
 
-  setInput("");
-  setLoading(true);
+  const closeChat = () => {
+    const sessionId =
+      sessionIdRef.current || sessionStorage.getItem(SESSION_STORAGE_KEY);
 
-  // fake typing effect
-  setTimeout(() => {
-    const reply = generateResponse(userInput);
+    sessionIdRef.current = null;
+    sessionStorage.removeItem(SESSION_STORAGE_KEY);
 
-    const botMsg = {
-      sender: "bot",
-      text: reply,
+    setOpen(false);
+    setMessages([]);
+    setInput("");
+    setLoading(false);
+    sendingRef.current = false;
+
+    if (sessionId) {
+      deleteChatSession(sessionId).catch(() => {});
+    }
+  };
+
+  const sendMessage = async () => {
+    const userInput = input.trim();
+
+    if (!userInput || sendingRef.current) return;
+
+    const sessionId = startSession();
+    sendingRef.current = true;
+
+    const userMsg = {
+      sender: "user",
+      text: userInput,
     };
 
-    setMessages((prev) => [...prev, botMsg]);
-    setLoading(false);
-  }, 600);
-};
+    setMessages((prev) => [...prev, userMsg]);
+
+    setInput("");
+    setLoading(true);
+
+    try {
+      const reply = await sendChatMessage(sessionId, userInput);
+
+      if (sessionIdRef.current === sessionId) {
+        const botMsg = {
+          sender: "bot",
+          text: reply,
+        };
+
+        setMessages((prev) => [...prev, botMsg]);
+      }
+    } catch {
+      if (sessionIdRef.current === sessionId) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            sender: "bot",
+            text: "Sorry, the assistant is unavailable right now. Please try again in a moment.",
+          },
+        ]);
+      }
+    } finally {
+      if (sessionIdRef.current === sessionId) {
+        sendingRef.current = false;
+        setLoading(false);
+      }
+    }
+  };
   return (
     <>
       <AnimatePresence>
@@ -56,30 +174,39 @@ const Chatbot = () => {
                 <Bot size={20} />
                 <span className="font-semibold">Ask Muneeb's Ai</span>
               </div>
-              <button className='cursor-pointer' onClick={() => setOpen(false)}><X/></button>
+              <button className='cursor-pointer' onClick={closeChat}><X/></button>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 mt-2 p-3 overflow-y-auto space-y-2 rounded-xl">
+            <div
+              ref={messagesRef}
+              className="flex-1 mt-2 p-3 overflow-y-auto space-y-2 rounded-xl"
+            >
               {messages.length === 0 && (
-                <div className="bg-[#2a3441] text-white p-2 rounded-lg w-fit max-w-[75%]">
+                <div className="bg-[#2a3441] text-white p-2 rounded-lg w-fit max-w-[75%] whitespace-pre-wrap break-words text-left">
                   Hello!!! How can I help you?
                 </div>
               )}
               {messages.map((msg, i) => (
                 <div
                   key={i}
-                  className={`p-2 rounded-lg w-fit max-w-[75%] ${
+                  className={`p-2 rounded-lg w-fit max-w-[75%] whitespace-pre-wrap break-words ${
                     msg.sender === "user"
-                      ? "bg-[#D4B783] text-black ml-auto text-right"
-                      : "bg-[#2a3441] text-white text-left"
+                      ? "bg-[#D4B783] text-black ml-auto text-left"
+                      : "bg-[#2a3441] text-white mr-auto text-left"
                   }`}
                 >
-                  {msg.text}
+                  {msg.sender === "user" ? (
+                    msg.text
+                  ) : (
+                    <LinkifiedText text={msg.text} />
+                  )}
                 </div>
               ))}
               {loading && (
-                <div className="text-gray-400 text-sm">Typing...</div>
+                <div className="text-gray-400 text-sm text-left mr-auto">
+                  Typing...
+                </div>
               )}
             </div>
 
@@ -105,7 +232,7 @@ const Chatbot = () => {
 
       {/* Floating Button */}
       <div
-        onClick={() => setOpen(!open)}
+        onClick={() => (open ? closeChat() : openChat())}
         className="fixed bottom-4 right-4 w-14 h-14 rounded-full bg-[#D4B783] text-black flex justify-center items-center cursor-pointer shadow-lg hover:scale-110 transition"
       >
         <Bot size={28} />

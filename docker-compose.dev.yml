@@ -25,6 +25,17 @@ services:
     environment:
       PORT: 8000
 
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./ai-service:/app
+    env_file:
+      - ./ai-service/.env
+
 volumes:
   frontend_node_modules:
   backend_node_modules:

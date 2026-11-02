@@ -6,6 +6,7 @@ import errorMiddleware from "./middlewares/error.middleware.js";
 import projectRoutes from "./routes/project.routes.js";
 import skillRoutes from "./routes/skill.routes.js";
 import journeyRoutes from "./routes/journey.routes.js";
+import cvRoutes from "./routes/cv.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
@@ -40,6 +41,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/skills", skillRoutes);
 app.use("/api/journey", journeyRoutes);
+app.use("/api/cv", cvRoutes);
 
 // Error handler must come after routes
 app.use(errorMiddleware);

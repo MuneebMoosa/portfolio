@@ -1,7 +1,11 @@
-
 import mongoose from "mongoose";
 import Project from "../models/project.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { assertValidProjectImage } from "../utils/fileValidation.js";
+import {
+  tryDeleteCloudinaryAsset,
+  uploadProjectImageAsset,
+} from "../utils/cloudinaryAsset.js";
 
 const allowedFields = [
   "title",
@@ -15,6 +19,9 @@ const allowedFields = [
   "order",
 ];
 
+const invalidPayload = (message) =>
+  Object.assign(new Error(message), { statusCode: 400 });
+
 // Only allow fields defined above in create/update requests
 const getAllowedFields = (body) => {
   if (!body || typeof body !== "object" || Array.isArray(body)) {
@@ -25,6 +32,83 @@ const getAllowedFields = (body) => {
     Object.entries(body).filter(([key]) =>
       allowedFields.includes(key)
     )
+  );
+};
+
+const parseJsonField = (value, fieldName) => {
+  if (typeof value !== "string") return value;
+
+  try {
+    return JSON.parse(value);
+  } catch {
+    throw invalidPayload(`Invalid ${fieldName} value.`);
+  }
+};
+
+const normalizeProjectPayload = (body) => {
+  const payload = getAllowedFields(body);
+
+  if ("type" in payload) {
+    payload.type = parseJsonField(payload.type, "project type");
+
+    if (
+      !payload.type ||
+      typeof payload.type !== "object" ||
+      Array.isArray(payload.type)
+    ) {
+      throw invalidPayload("Invalid project type value.");
+    }
+  }
+
+  if ("techStack" in payload) {
+    payload.techStack =
+      typeof payload.techStack === "string" &&
+      payload.techStack.trim() === ""
+        ? []
+        : parseJsonField(payload.techStack, "technology stack");
+
+    if (!Array.isArray(payload.techStack)) {
+      throw invalidPayload("Invalid technology stack value.");
+    }
+  }
+
+  if (
+    "featured" in payload &&
+    typeof payload.featured === "string"
+  ) {
+    payload.featured = payload.featured === "true";
+  }
+
+  if ("order" in payload && typeof payload.order === "string") {
+    const order = Number(payload.order);
+
+    if (!Number.isFinite(order)) {
+      throw invalidPayload("Invalid project order value.");
+    }
+
+    payload.order = order;
+  }
+
+  return payload;
+};
+
+const uploadRequestImage = async (file) => {
+  assertValidProjectImage(file);
+
+  const result = await uploadProjectImageAsset(file);
+
+  return {
+    image: result.secure_url,
+    imagePublicId: result.public_id,
+  };
+};
+
+const cleanupUploadedImage = async (uploadedImage) => {
+  if (!uploadedImage?.imagePublicId) return;
+
+  await tryDeleteCloudinaryAsset(
+    uploadedImage.imagePublicId,
+    "image"
   );
 };
 
@@ -73,15 +157,26 @@ export const getProjectById = asyncHandler(async (req, res) => {
 // POST /api/projects
 // Create a new project
 export const createProject = asyncHandler(async (req, res) => {
-  const payload = getAllowedFields(req.body);
+  const payload = normalizeProjectPayload(req.body);
+  let uploadedImage = null;
 
-  const project = await Project.create(payload);
+  if (req.file) {
+    uploadedImage = await uploadRequestImage(req.file);
+    Object.assign(payload, uploadedImage);
+  }
 
-  return res.status(201).json({
-    success: true,
-    message: "Project created successfully",
-    data: project,
-  });
+  try {
+    const project = await Project.create(payload);
+
+    return res.status(201).json({
+      success: true,
+      message: "Project created successfully",
+      data: project,
+    });
+  } catch (error) {
+    await cleanupUploadedImage(uploadedImage);
+    throw error;
+  }
 });
 
 // PATCH /api/projects/:id
@@ -96,7 +191,22 @@ export const updateProject = asyncHandler(async (req, res) => {
     });
   }
 
-  const payload = getAllowedFields(req.body);
+  const project = await Project.findById(id);
+
+  if (!project) {
+    return res.status(404).json({
+      success: false,
+      message: "Project not found",
+    });
+  }
+
+  const payload = normalizeProjectPayload(req.body);
+  let uploadedImage = null;
+
+  if (req.file) {
+    uploadedImage = await uploadRequestImage(req.file);
+    Object.assign(payload, uploadedImage);
+  }
 
   if (Object.keys(payload).length === 0) {
     return res.status(400).json({
@@ -105,16 +215,23 @@ export const updateProject = asyncHandler(async (req, res) => {
     });
   }
 
-  const project = await Project.findByIdAndUpdate(id, payload, {
-    new: true,
-    runValidators: true,
-  });
+  const previousImagePublicId = project.imagePublicId;
 
-  if (!project) {
-    return res.status(404).json({
-      success: false,
-      message: "Project not found",
-    });
+  project.set(payload);
+
+  try {
+    await project.save();
+  } catch (error) {
+    await cleanupUploadedImage(uploadedImage);
+    throw error;
+  }
+
+  if (
+    uploadedImage &&
+    previousImagePublicId &&
+    previousImagePublicId !== uploadedImage.imagePublicId
+  ) {
+    await tryDeleteCloudinaryAsset(previousImagePublicId, "image");
   }
 
   return res.status(200).json({
@@ -144,6 +261,11 @@ export const deleteProject = asyncHandler(async (req, res) => {
       message: "Project not found",
     });
   }
+
+  await tryDeleteCloudinaryAsset(
+    project.imagePublicId,
+    "image"
+  );
 
   return res.status(200).json({
     success: true,

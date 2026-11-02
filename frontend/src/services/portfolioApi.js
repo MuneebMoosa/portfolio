@@ -1,12 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+export const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+
 export const portfolioApi = createApi({
   reducerPath: "portfolioApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || "http://localhost:8000/api",
+    baseUrl: API_BASE_URL,
     credentials: "include",
   }),
-  tagTypes: ["Project", "Skill", "Journey"],
+  tagTypes: ["Project", "Skill", "Journey", "CV"],
   endpoints: (builder) => ({
 
     login: builder.mutation({
@@ -43,6 +46,28 @@ export const portfolioApi = createApi({
       providesTags: ["Journey"],
     }),
 
+    getCv: builder.query({
+      query: () => "/cv",
+      providesTags: ["CV"],
+    }),
+
+    uploadCv: builder.mutation({
+      query: (formData) => ({
+        url: "/cv",
+        method: "POST",
+        body: formData,
+      }),
+      invalidatesTags: ["CV"],
+    }),
+
+    deleteCv: builder.mutation({
+      query: () => ({
+        url: "/cv",
+        method: "DELETE",
+      }),
+      invalidatesTags: ["CV"],
+    }),
+
     createProject: builder.mutation({
         query: (newProject) => ({
           url: "/projects",
@@ -53,10 +78,10 @@ export const portfolioApi = createApi({
       }),
 
     updateProject: builder.mutation({
-      query: ({ id, ...updatedProject }) => ({
+      query: ({ id, formData, ...updatedProject }) => ({
         url: `/projects/${id}`,
         method: "PATCH",
-        body: updatedProject,
+        body: formData || updatedProject,
       }),
       invalidatesTags: ["Project"],
     }),
@@ -151,6 +176,9 @@ export const portfolioApi = createApi({
 export const { useGetProjectsQuery ,
    useGetSkillsQuery , 
    useGetJourneyQuery , 
+   useGetCvQuery,
+   useUploadCvMutation,
+   useDeleteCvMutation,
    useCreateProjectMutation, 
    useUpdateProjectMutation, 
    useDeleteProjectMutation,

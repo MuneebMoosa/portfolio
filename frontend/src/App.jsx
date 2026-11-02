@@ -20,6 +20,7 @@ import Dashboard from "../src/components/admin/Dashboard";
 import ProjectsAdmin from "../src/components/admin/ProjectsAdmin";
 import SkillsAdmin from "../src/components/admin/SkillsAdmin";
 import JourneyAdmin from "../src/components/admin/JourneyAdmin";
+import CVAdmin from "../src/components/admin/CVAdmin";
 
 const Portfolio = () => {
   return (
@@ -58,6 +59,7 @@ const App = () => {
               <Route path="projects" element={<ProjectsAdmin />} />
               <Route path="skills" element={<SkillsAdmin />} />
               <Route path="journey" element={<JourneyAdmin />} />
+              <Route path="cv" element={<CVAdmin />} />
             </Route>
          </Route>
       </Routes>
