@@ -3,6 +3,7 @@ import {
   FolderKanban,
   Code2,
   GraduationCap,
+  FileText,
   ArrowUpRight,
 } from "lucide-react";
 
@@ -24,6 +25,12 @@ const sections = [
     description: "Manage education and work experience.",
     path: "/admin/journey",
     icon: GraduationCap,
+  },
+  {
+    title: "CV",
+    description: "Upload and replace the CV.",
+    path: "/admin/cv",
+    icon: FileText,
   },
 ];
 

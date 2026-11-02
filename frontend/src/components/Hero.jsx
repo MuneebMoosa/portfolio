@@ -3,6 +3,7 @@ import {FaGithub,FaLinkedinIn,FaInstagram,FaWhatsapp,FaDiscord} from "react-icon
 import heroImage from "../assets/image.webp"
 import { motion } from "framer-motion";
 import { useState , useEffect } from 'react';
+import { API_BASE_URL, useGetCvQuery } from "../services/portfolioApi";
 import "../components/Hero.css";
 
 const Hero = () => {
@@ -14,6 +15,48 @@ const Hero = () => {
     { icon: FaDiscord, link: "https://discord.com/users/1264980057945014345" },
   ];
   const path = `M337.911 0.00854492L339.359 0.041748C400.593 1.96326 449.175 70.2468 448.156 153.461C447.13 237.33 396.107 304.607 334.192 303.727L332.744 303.694C274.396 301.863 227.535 239.777 224.129 161.934C221.455 243.803 171.121 308.791 110.263 307.927L108.814 307.893C47.5799 305.972 -1.00296 237.688 0.0157166 154.473C1.04262 70.6042 52.0665 3.32792 113.981 4.20776L115.43 4.24097C173.777 6.07221 220.636 68.157 224.042 145.999C226.716 64.1306 277.053 -0.856299 337.911 0.00854492Z`;
+
+  const { data: cvResponse, isLoading: isCvLoading } = useGetCvQuery();
+  const [cvDownloadError, setCvDownloadError] = useState("");
+
+  const cv = cvResponse?.data || null;
+  const cvDownloadUrl = `${API_BASE_URL}/cv/download`;
+
+  const handleCvDownload = async (event) => {
+    event.preventDefault();
+    setCvDownloadError("");
+
+    if (isCvLoading) return;
+
+    if (!cv) {
+      setCvDownloadError("CV is not available yet.");
+      return;
+    }
+
+    try {
+      const response = await fetch(cvDownloadUrl);
+
+      if (!response.ok) {
+        throw new Error("CV download failed");
+      }
+
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = objectUrl;
+      link.download = cv.fileName || "CV.pdf";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+    } catch {
+      setCvDownloadError(
+        "Could not download the CV. Please try again later."
+      );
+    }
+  };
 
   // name area start
   const initialName = "منيب موسى";
@@ -81,11 +124,27 @@ const Hero = () => {
             </span>
           </a>
 
-          <div className="flex-1 text-[#9CA3AF] p-3 flex items-center justify-center gap-2 hover:text-[#E84A4A] hover:translate-x-1 transition cursor-pointer group">
+          <a
+            href={cvDownloadUrl}
+            onClick={handleCvDownload}
+            aria-disabled={!cv || isCvLoading}
+            title={cv ? "Download CV" : "CV is not available yet."}
+            className={`flex-1 text-[#9CA3AF] p-3 flex items-center justify-center gap-2 transition group ${
+              cv && !isCvLoading
+                ? "hover:text-[#E84A4A] hover:translate-x-1 cursor-pointer"
+                : "opacity-60 cursor-not-allowed"
+            }`}
+          >
             <FileDown size={18} className="download-icon" />
-            DOWNLOAD CV
-          </div>
+            {isCvLoading ? "LOADING CV..." : "DOWNLOAD CV"}
+          </a>
         </div>
+
+        {cvDownloadError && (
+          <p className="mt-2 text-xs text-[#E84A4A] font-[family-name:var(--font-kosugi)]">
+            {cvDownloadError}
+          </p>
+        )}
 
         {/* Icons */}
         <div className="flex justify-center lg:justify-start gap-4 md:gap-6 mt-8">
