@@ -1,6 +1,7 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
 
 from app.core.config import CORS_ORIGINS
 from app.routes.chat import router as chat_router
@@ -24,3 +25,7 @@ def health_check():
         "status": "ok",
         "service": "portfolio-ai",
     }
+
+@app.head("/health")
+def health_check_head():
+    return Response(status_code=200)
