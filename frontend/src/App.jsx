@@ -1,3 +1,4 @@
+import { useCallback, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import Navbar from "./components/Navbar";
@@ -10,6 +11,8 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Animation from "./components/Animation";
 import Chatbot from "./components/Chatbot";
+import Preloader from "./components/loader/Preloader";
+import { hasSeenPreloader } from "./components/loader/preloaderStorage";
 
 import { Analytics } from "@vercel/analytics/react";
 
@@ -23,12 +26,21 @@ import JourneyAdmin from "../src/components/admin/JourneyAdmin";
 import CVAdmin from "../src/components/admin/CVAdmin";
 
 const Portfolio = () => {
+  const [isPreloaded, setIsPreloaded] = useState(() => hasSeenPreloader());
+  const handlePreloaderDone = useCallback(() => setIsPreloaded(true), []);
+
   return (
     <>
-      <div className="overflow-x-clip relative min-h-screen flex flex-col text-center">
+      <Preloader onDone={handlePreloaderDone} />
+
+      <div
+        className="overflow-x-clip relative min-h-screen flex flex-col text-center"
+        style={{ visibility: isPreloaded ? "visible" : "hidden" }}
+        aria-hidden={!isPreloaded}
+      >
         <Animation />
         <Navbar />
-        <Hero />
+        <Hero isPreloaded={isPreloaded} />
         <About />
         <Skills />
         <Journey />

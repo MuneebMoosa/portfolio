@@ -6,7 +6,10 @@ import { useState , useEffect } from 'react';
 import { API_BASE_URL, useGetCvQuery } from "../services/portfolioApi";
 import "../components/Hero.css";
 
-const Hero = () => {
+const INITIAL_NAME = "منيب موسى";
+const TARGET_NAME = "MUNEEB MOOSA";
+
+const Hero = ({ isPreloaded = false }) => {
   const socialLinks = [
     { icon: FaGithub, link: "https://github.com/MuneebMoosa" },
     { icon: FaLinkedinIn, link: "https://www.linkedin.com/in/muneeb-moosa-v-v-318270288" },
@@ -59,37 +62,33 @@ const Hero = () => {
   };
 
   // name area start
-  const initialName = "منيب موسى";
-  const targetName = "MUNEEB MOOSA";
+  const [displayedName, setDisplayedName] = useState(INITIAL_NAME);
 
-  const [displayedName, setDisplayedName] = useState(initialName);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const current = [...initialName];
-      const target = [...targetName];
+    if (!isPreloaded) return undefined;
 
-      let index = 0;
+    const current = [...INITIAL_NAME];
+    const target = [...TARGET_NAME];
+    let index = 0;
 
-      const interval = setInterval(() => {
-        if (index < target.length) {
-          if (index < current.length) {
-            current[index] = target[index];
-          } else {
-            current.push(target[index]);
-          }
+    const interval = setInterval(() => {
+      if (index >= target.length) {
+        clearInterval(interval);
+        return;
+      }
 
-          setDisplayedName(current.join(""));
-          index++;
-        } else {
-          clearInterval(interval);
-        }
-      }, 80); // slightly faster = smoother feel
+      if (index < current.length) {
+        current[index] = target[index];
+      } else {
+        current.push(target[index]);
+      }
 
-      return () => clearInterval(interval);
-    }, 800); // faster start (better UX)
+      setDisplayedName(current.join(""));
+      index += 1;
+    }, 80);
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => clearInterval(interval);
+  }, [isPreloaded]);
 
   const spaceIdx = displayedName.indexOf(" ");
   const line1 = spaceIdx > 0 ? displayedName.slice(0, spaceIdx) : displayedName;
